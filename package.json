@@ -7,7 +7,9 @@
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -28,6 +30,9 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.7.18",
     "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
+    "eslint": "^8.23.1",
     "nodemon": "^2.0.20",
     "ts-jest": "^29.0.1",
     "ts-node": "^10.9.1",
