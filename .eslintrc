@@ -5,6 +5,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
@@ -22,10 +23,10 @@
     "comma-dangle": [
       "error",
       {
-        "arrays": "never",
-        "objects": "always",
-        "imports": "never",
-        "exports": "never",
+        "arrays": "only-multiline",
+        "objects": "only-multiline",
+        "imports": "only-multiline",
+        "exports": "only-multiline",
         "functions": "never"
       }
     ],
