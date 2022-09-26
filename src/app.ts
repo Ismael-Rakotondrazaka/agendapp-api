@@ -14,6 +14,9 @@ app.use(
 import authRoutes from "./routes/v1/auth/index";
 app.use("/api/v1/auth", authRoutes);
 
+import todoRoutes from "./routes/v1/todos/index";
+app.use("/api/v1/todos", todoRoutes);
+
 import { errorMiddleware } from "./middlewares/index";
 app.use(errorMiddleware);
 

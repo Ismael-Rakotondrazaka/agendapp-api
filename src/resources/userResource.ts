@@ -1,8 +1,11 @@
-import { HydratedDocument } from "mongoose";
-import { IUser, TUserResource } from "../types/index";
+import { HydratedDocument, Types } from "mongoose";
+import { IUser, TUserResource, TUserDocumentProps } from "../types/index";
 
 export default function userResource(
-  resource: HydratedDocument<IUser>
+  resource: HydratedDocument<unknown, any, IUser> &
+    IUser & {
+      _id: Types.ObjectId;
+    } & TUserDocumentProps
 ): TUserResource {
   return {
     _id: resource.id,

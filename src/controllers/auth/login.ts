@@ -6,11 +6,9 @@ import bcrypt from "bcrypt";
 import { BadRequestError, UnauthorizedError } from "../../utils/errors";
 import { validateEmail, validatePassword } from "../../utils/strings";
 import { User } from "../../models";
-import { HydratedDocument } from "mongoose";
-import { IUser } from "../../types";
 import authConfig from "../../configs/authConfig.json";
 import { createDataResponse } from "../../utils/responses";
-import userResource from "../../resources/userResource";
+import { userResource } from "../../resources";
 
 export default async function login(
   req: Request,
@@ -63,7 +61,7 @@ export default async function login(
     validateEmail(email);
     validatePassword(password);
 
-    const targetUser: HydratedDocument<IUser> | null = await User.findOne({
+    const targetUser = await User.findOne({
       email: email,
     });
 
@@ -94,12 +92,19 @@ export default async function login(
         _id: targetUser._id.toString(),
       },
     };
+    const refreshTokenExpires = new Date();
+    refreshTokenExpires.setTime(
+      refreshTokenExpires.getTime() + authConfig.REFRESH_TOKEN_LIFE
+    );
     const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET || "";
     const refreshToken = jwt.sign(refreshTokenData, refreshTokenSecret, {
-      expiresIn: `${authConfig.REFRESH_TOKEN_LIFE}`,
+      expiresIn: `${refreshTokenExpires.getTime()}`,
     });
 
-    targetUser.refreshTokens.push(refreshToken);
+    targetUser.refreshTokens.push({
+      token: refreshToken,
+      expiresAt: refreshTokenExpires,
+    });
 
     await targetUser.save();
 

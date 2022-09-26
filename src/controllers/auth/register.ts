@@ -16,7 +16,7 @@ import {
   validatePassword,
   validatePasswordValidation,
 } from "../../utils/strings";
-import userResource from "../../resources/userResource";
+import { userResource } from "../../resources";
 
 export default async function register(
   req: Request,
@@ -100,7 +100,7 @@ export default async function register(
       authConfig.PASSWORD_SALT_ROUNDS
     );
 
-    const targetUser: HydratedDocument<IUser> = new User({
+    const targetUser = new User({
       firstName,
       lastName,
       email,
@@ -120,12 +120,19 @@ export default async function register(
         _id: targetUser._id.toString(),
       },
     };
+    const refreshTokenExpires = new Date();
+    refreshTokenExpires.setTime(
+      refreshTokenExpires.getTime() + authConfig.REFRESH_TOKEN_LIFE
+    );
     const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET || "";
     const refreshToken = jwt.sign(refreshTokenData, refreshTokenSecret, {
-      expiresIn: `${authConfig.REFRESH_TOKEN_LIFE}`,
+      expiresIn: `${refreshTokenExpires.getTime()}`,
     });
 
-    targetUser.refreshTokens = [refreshToken];
+    targetUser.refreshTokens.push({
+      token: refreshToken,
+      expiresAt: refreshTokenExpires,
+    });
 
     await targetUser.save();
 

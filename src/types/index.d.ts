@@ -1,8 +1,25 @@
-export type TUserResource = {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
+import { Types, Model } from "mongoose";
+
+// User
+
+export interface IRefreshTokens {
+  token: string;
+  expiresAt: Date;
+}
+
+export interface ITodo {
+  title: string;
+  description: string;
+  level: string;
+  status: string;
+  startAt: Date;
+  endAt: Date;
+  createdAt: Date;
+}
+
+export type TUserDocumentProps = {
+  refreshTokens: Types.DocumentArray<IRefreshTokens>;
+  todos: Types.DocumentArray<ITodo>;
 };
 
 export interface IUser {
@@ -11,8 +28,37 @@ export interface IUser {
   fullName: string;
   email: string;
   password: string;
-  refreshTokens: string[];
+  refreshTokens: IRefreshTokens[];
+  todos: ITodo[];
 }
+
+export type TUserModel = Model<
+  IUser,
+  Record<string, unknown>,
+  TUserDocumentProps
+>;
+
+// Resource
+
+export type TUserResource = {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+};
+
+export type TTodoResource = {
+  _id: string;
+  title: string;
+  description: string;
+  level: string;
+  status: string;
+  startAt: Date;
+  endAt: Date;
+  createdAt: Date;
+};
+
+// Response
 
 export type TDataResponse = {
   data: Record<string, unknown>;
