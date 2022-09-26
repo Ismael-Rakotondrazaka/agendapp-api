@@ -1,7 +1,53 @@
-import mongoose, { Schema } from "mongoose";
-import { IUser } from "../types/index";
+import { Schema, model } from "mongoose";
+import { IUser, IRefreshTokens, ITodo, TUserModel } from "../types";
 
-const userSchema = new Schema<IUser>({
+const refreshTokenSchema = new Schema<IRefreshTokens>({
+  token: String,
+  expiresAt: Date,
+});
+
+const todoSchema = new Schema<ITodo>({
+  title: {
+    type: String,
+    required: true,
+    min: 1,
+    max: 50,
+  },
+  description: {
+    type: String,
+    required: false,
+    default: "",
+    min: 0,
+    max: 200,
+  },
+  level: {
+    type: String,
+    required: false,
+    enum: ["normal", "important"],
+    default: "normal",
+  },
+  status: {
+    type: String,
+    required: true,
+    enum: ["done", "pending", "failed"],
+    default: "pending",
+  },
+  startAt: {
+    type: Date,
+    required: true,
+  },
+  endAt: {
+    type: Date,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    required: false,
+    default: () => new Date(),
+  },
+});
+
+const userSchema = new Schema<IUser, TUserModel>({
   firstName: {
     type: String,
     required: true,
@@ -18,14 +64,14 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: true,
   },
-  refreshTokens: {
-    type: [String],
-    required: true,
-  },
+  refreshTokens: [refreshTokenSchema],
+  todos: [todoSchema],
 });
 
 userSchema.virtual("fullName").get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
 
-export default mongoose.model("User", userSchema);
+const User: TUserModel = model<IUser, TUserModel>("User", userSchema);
+
+export default User;
