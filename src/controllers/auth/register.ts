@@ -80,9 +80,9 @@ export default async function register(
     passwordValidation = passwordValidation + "";
 
     // validate inputs
-    validateFirstName(firstName);
-    validateLastName(lastName);
-    validateEmail(email);
+    firstName = validateFirstName(firstName);
+    lastName = validateLastName(lastName);
+    email = validateEmail(email);
 
     const duplicateUser: HydratedDocument<IUser> | null = await User.findOne({
       email: email,

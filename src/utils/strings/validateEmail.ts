@@ -1,12 +1,13 @@
 import validator from "validator";
 import { BadRequestError } from "../errors";
 
-function validateEmail(firstName: string): boolean {
-  if (!validator.isEmail(firstName)) {
+function validateEmail(email: string): string {
+  email = email.trim();
+  if (!validator.isEmail(email)) {
     throw new BadRequestError("Invalid email address");
   }
 
-  return true;
+  return email;
 }
 
 export default validateEmail;
