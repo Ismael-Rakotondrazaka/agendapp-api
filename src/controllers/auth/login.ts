@@ -58,7 +58,7 @@ export default async function login(
     password = password + "";
 
     // validate inputs
-    validateEmail(email);
+    email = validateEmail(email);
     validatePassword(password);
 
     const targetUser = await User.findOne({

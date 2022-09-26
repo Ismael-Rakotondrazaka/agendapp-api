@@ -2,7 +2,8 @@ import validator from "validator";
 import userConfig from "../../configs/userConfig.json";
 import { BadRequestError } from "../errors";
 
-function validateFirstName(firstName: string): boolean {
+function validateFirstName(firstName: string): string {
+  firstName = firstName.trim();
   if (!validator.isAlpha(firstName)) {
     throw new BadRequestError(
       "firstName contains non english alphabet characters"
@@ -29,7 +30,7 @@ function validateFirstName(firstName: string): boolean {
     );
   }
 
-  return true;
+  return firstName;
 }
 
 export default validateFirstName;
