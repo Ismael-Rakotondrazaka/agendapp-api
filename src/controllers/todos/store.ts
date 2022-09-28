@@ -28,7 +28,7 @@ export default async function store(
     const targetUserId: string = (req as ICustomRequest).payload.user._id;
     const targetUser = await User.findOne({
       _id: targetUserId,
-    }).select({ refreshTokens: 0 /* , todos: 0 */ });
+    }).select({ refreshTokens: 0 });
 
     if (!targetUser) {
       throw new BadRequestError();
@@ -104,6 +104,7 @@ export default async function store(
       level,
     });
 
+    targetUser.todos.push(targetTodo);
     await targetUser.save();
 
     return res.status(201).json(

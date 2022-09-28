@@ -1,8 +1,10 @@
-import { Types } from "mongoose";
+import { HydratedDocument, Types } from "mongoose";
 import { ITodo, TTodoResource } from "../types/index";
 
 export default function todoResource(
-  resource: Types.Subdocument<Types.ObjectId> & ITodo
+  resource: HydratedDocument<unknown, any, ITodo> &
+    Types.Subdocument<Types.ObjectId> &
+    ITodo
 ): TTodoResource {
   return {
     _id: resource.id,
