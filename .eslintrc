@@ -9,7 +9,7 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "no-console": "warn",
+    "no-console": "error",
     "semi": ["error", "always"],
     "quotes": ["error", "double"],
     "semi-style": ["error", "last"],
