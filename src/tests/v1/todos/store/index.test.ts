@@ -805,4 +805,191 @@ describe("POST /api/v1/todos", () => {
         expect(new Date(dateTime).getTime()).not.toBeNaN();
       });
   });
+
+  /* 
+    {
+      startAt: relative to startAt,
+      endAt: relative to endAt,
+    }
+  */
+  test.each([
+    {
+      startAt: -2 * 60 * 60 * 1000, // -2h
+      endAt: -45 * 60 * 1000, // -45mn
+    },
+    {
+      startAt: 0, // 0h
+      endAt: 0, // 0h
+    },
+    {
+      startAt: 1 * 60 * 60 * 1000, // +1h
+      endAt: 1 * 60 * 60 * 1000, // +1h
+    },
+    {
+      startAt: -1 * 60 * 60 * 1000, // -1h
+      endAt: 1 * 60 * 60 * 1000, // +1h
+    },
+  ])(
+    "should return 409 Conflict if interval is correct but it superpose another existing todo {testCase: UIEDmiNq17C4-RHLoA4eE}",
+    async (interval) => {
+      await seedDB("UIEDmiNq17C4-RHLoA4eE");
+
+      const startAt = faker.date.future();
+      startAt.setHours(9, 0, 0, 0);
+      const intervalMs = 2 * 60 * 60 * 1000; // 2h (9h - 11h)
+      const endAt = new Date(startAt.getTime() + intervalMs);
+
+      const accessTokenSecret: string =
+        process.env.TEST_ACCESS_TOKEN_SECRET || "";
+      const accessTokenLife = 15; // mn
+
+      // mimic access token
+      const accessToken = jwt.sign(
+        {
+          user: {
+            _id: "6333f30d40ff5312965bd5ad",
+            firstName: "Dasia",
+            lastName: "Armstrong",
+          },
+        },
+        accessTokenSecret,
+        {
+          expiresIn: `${accessTokenLife}m`,
+        }
+      );
+
+      await request(app)
+        .post("/api/v1/todos")
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send({
+          title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
+          description:
+            Math.floor(Math.random() * 10) % 2 === 0
+              ? faker.hacker.phrase()
+              : faker.lorem.sentence(7),
+          level:
+            Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
+          startAt,
+          endAt,
+        })
+        .expect("Content-Type", /json/)
+        .expect(201);
+
+      const todo = {
+        title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
+        description:
+          Math.floor(Math.random() * 10) % 2 === 0
+            ? faker.hacker.phrase()
+            : faker.lorem.sentence(7),
+        level:
+          Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
+        startAt: new Date(startAt.getTime() + interval.startAt),
+        endAt: new Date(endAt.getTime() + interval.endAt),
+      };
+
+      await request(app)
+        .post("/api/v1/todos")
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send(todo)
+        .expect("Content-Type", /json/)
+        .expect(409)
+        .then((response) => {
+          expect(response.body).toEqual(
+            expect.objectContaining({
+              error: expect.objectContaining({
+                message: expect.any(String),
+                statusText: expect.any(String),
+                statusCode: expect.any(Number),
+                code: expect.any(String),
+                dateTime: expect.any(String),
+              }),
+            })
+          );
+
+          return response.body;
+        })
+        .then((body) => {
+          expect(body.error.statusText).toBe("Conflict");
+          expect(body.error.statusCode).toBe(409);
+          expect(body.error.code).toBe("E4"); // Conflict
+
+          const dateTime = body.error.dateTime;
+          expect(new Date(dateTime).getTime()).not.toBeNaN();
+        });
+    }
+  );
+
+  /* [interval in mn] */
+  test.each([15, 30, 75, -15, -30, -75])(
+    "should return 201 if interval is continuous {testCase: _8s9bX8dmR7sJu_sl4veC}",
+    async (interval) => {
+      await seedDB("_8s9bX8dmR7sJu_sl4veC");
+
+      const startAt = faker.date.future();
+      startAt.setHours(12, 0, 0, 0);
+      const endAt = new Date(startAt.getTime() + 2 * 60 * 60 * 1000);
+
+      // mimic accessToken
+      const accessTokenSecret: string =
+        process.env.TEST_ACCESS_TOKEN_SECRET || "";
+      const accessTokenLife: number = 10 * 60 * 1000; // 10mn
+      const accessToken = jwt.sign(
+        {
+          user: {
+            _id: "633408aeab6c493041b2c596",
+            firstName: "Bonnie",
+            lastName: "Balistreri",
+          },
+        },
+        accessTokenSecret,
+        {
+          expiresIn: `${accessTokenLife}`,
+        }
+      );
+
+      await request(app)
+        .post("/api/v1/todos")
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send({
+          title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
+          description:
+            Math.floor(Math.random() * 10) % 2 === 0
+              ? faker.hacker.phrase()
+              : faker.lorem.sentence(7),
+          level:
+            Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
+          startAt,
+          endAt,
+        })
+        .expect("Content-Type", /json/)
+        .expect(201);
+
+      const newStartAt =
+        interval > 0
+          ? endAt
+          : new Date(startAt.getTime() + interval * 60 * 1000);
+
+      const newEndAt =
+        interval > 0
+          ? new Date(endAt.getTime() + interval * 60 * 1000)
+          : startAt;
+
+      await request(app)
+        .post("/api/v1/todos")
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send({
+          title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
+          description:
+            Math.floor(Math.random() * 10) % 2 === 0
+              ? faker.hacker.phrase()
+              : faker.lorem.sentence(7),
+          level:
+            Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
+          startAt: newStartAt,
+          endAt: newEndAt,
+        })
+        .expect("Content-Type", /json/)
+        .expect(201);
+    }
+  );
 });
