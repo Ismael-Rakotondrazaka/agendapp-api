@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from "express";
 import { User } from "../../models";
-import { BadRequestError } from "../../utils/errors";
+import { BadRequestError, ConflictError } from "../../utils/errors";
 import { createDataResponse } from "../../utils/responses";
 import { todoResource } from "../../resources";
 import {
@@ -95,6 +95,64 @@ export default async function store(
     startAt = interval.start;
     endAt = interval.end;
     level = validateLevel(level);
+
+    // check if no todo exist in the interval
+    // there are 3 possibilities
+    const conflictTodo = await User.findOne({
+      $or: [
+        {
+          $and: [
+            { _id: targetUser._id },
+            {
+              "todos.startAt": {
+                $gte: startAt,
+                $lt: endAt,
+              },
+            },
+            {
+              "todos.endAt": {
+                $gt: endAt,
+              },
+            },
+          ],
+        },
+        {
+          $and: [
+            { _id: targetUser._id },
+            {
+              "todos.startAt": {
+                $lt: startAt,
+              },
+            },
+            {
+              "todos.endAt": {
+                $gt: startAt,
+                $lte: endAt,
+              },
+            },
+          ],
+        },
+        {
+          $and: [
+            { _id: targetUser._id },
+            {
+              "todos.startAt": {
+                $gte: startAt,
+              },
+            },
+            {
+              "todos.endAt": {
+                $lte: endAt,
+              },
+            },
+          ],
+        },
+      ],
+    });
+
+    if (conflictTodo) {
+      throw new ConflictError("1");
+    }
 
     const targetTodo = targetUser.todos.create({
       title,

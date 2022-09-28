@@ -1,0 +1,1 @@
+{"name":"tasker-backend","dependencies":{"bcrypt":{"version":"5.0.1"},"cors":{"version":"2.8.5"},"dotenv":{"version":"16.0.2"},"express":{"version":"4.18.1"},"http-status-codes":{"version":"2.2.0"},"jest":{"version":"29.0.3"},"jsonwebtoken":{"version":"8.5.1"},"mongoose":{"version":"6.6.1"},"supertest":{"version":"6.2.4"},"validator":{"version":"13.7.0"}}}
