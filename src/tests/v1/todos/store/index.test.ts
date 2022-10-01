@@ -325,7 +325,7 @@ describe("POST /api/v1/todos", () => {
       });
   });
 
-  test("should return 400 Bad Request if end is before start {testCase: XJNdn3WA0zhokS3IPnbh6}", async () => {
+  test("should return 400 Bad Request if endAt is before startAt {testCase: XJNdn3WA0zhokS3IPnbh6}", async () => {
     await seedDB("XJNdn3WA0zhokS3IPnbh6");
 
     const _id = "633159f667f9f77f3a1ca474";
@@ -353,7 +353,7 @@ describe("POST /api/v1/todos", () => {
       "The SMTP monitor is down, generate the auxiliary pixel so we can program the CLI system!";
 
     const startAt: Date = faker.date.future();
-    startAt.setHours(4); // To make sure start is not a few minutes before midnight
+    startAt.setHours(14); // To make sure start is not a few minutes before midnight
     const endAt = new Date(startAt.getTime() - 6 * 60 * 60 * 1000); // startAt - 6h
     const data: Record<string, unknown> = {
       title,
@@ -987,6 +987,92 @@ describe("POST /api/v1/todos", () => {
             Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
           startAt: newStartAt,
           endAt: newEndAt,
+        })
+        .expect("Content-Type", /json/)
+        .expect(201);
+    }
+  );
+
+  // [ interval in mn ]
+  test.each([15, 30, 75])(
+    "should return 201 Created if startAt or endAt is at midnight {testCase: y-GEOrbC8lISzyHB22JPV}",
+    async (interval) => {
+      await seedDB("y-GEOrbC8lISzyHB22JPV");
+
+      const data: Record<string, string> = {
+        title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
+        description:
+          Math.floor(Math.random() * 10) % 2 === 0
+            ? faker.hacker.phrase()
+            : faker.lorem.sentence(7),
+        status: Math.round(Math.random() * 100) % 2 === 0 ? "done" : "failed",
+        level:
+          Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
+      };
+
+      // mimic accessToken
+      const accessTokenSecret: string =
+        process.env.TEST_ACCESS_TOKEN_SECRET || "";
+      const accessTokenLife: number = 10 * 60 * 1000; // 10mn
+      const accessToken = jwt.sign(
+        {
+          user: {
+            _id: "6337cb1801181e08bb858f8a",
+            firstName: "Javonte",
+            lastName: "Herman",
+          },
+        },
+        accessTokenSecret,
+        {
+          expiresIn: `${accessTokenLife}`,
+        }
+      );
+
+      // endAt is at midnight
+      const endAt = faker.date.future();
+      endAt.setHours(0, 0, 0, 0);
+
+      const startAt = new Date(endAt.getTime() - interval * 60 * 1000); // start - interval
+
+      data["startAt"] = startAt.toISOString();
+      data["endAt"] = endAt.toISOString();
+
+      await request(app)
+        .post("/api/v1/todos")
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send({
+          title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
+          description:
+            Math.floor(Math.random() * 10) % 2 === 0
+              ? faker.hacker.phrase()
+              : faker.lorem.sentence(7),
+          level:
+            Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
+          startAt,
+          endAt,
+        })
+        .expect("Content-Type", /json/)
+        .expect(201);
+
+      // clear the DB and repopulate
+      await seedDB("y-GEOrbC8lISzyHB22JPV");
+
+      startAt.setTime(endAt.getTime());
+      endAt.setMinutes(interval, 0, 0);
+
+      await request(app)
+        .post("/api/v1/todos")
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send({
+          title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
+          description:
+            Math.floor(Math.random() * 10) % 2 === 0
+              ? faker.hacker.phrase()
+              : faker.lorem.sentence(7),
+          level:
+            Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
+          startAt,
+          endAt,
         })
         .expect("Content-Type", /json/)
         .expect(201);
