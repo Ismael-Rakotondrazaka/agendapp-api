@@ -3,10 +3,10 @@ import { User } from "../../models";
 import { BadRequestError, ConflictError } from "../../utils/errors";
 import { createDataResponse } from "../../utils/responses";
 import { todoResource } from "../../resources";
+import { validateInterval } from "../../utils/dates";
 import {
   validateTitle,
   validateDescription,
-  validateInterval,
   validateLevel,
 } from "../../utils/strings";
 
@@ -92,6 +92,12 @@ export default async function store(
     title = validateTitle(title);
     description = validateDescription(description);
     const interval = validateInterval(startAt, endAt);
+    // check if start is not in the future
+    if (new Date(startAt).getTime() < Date.now()) {
+      throw new BadRequestError(
+        "Invalid interval. startAt is not in the future."
+      );
+    }
     startAt = interval.start;
     endAt = interval.end;
     level = validateLevel(level);
@@ -151,7 +157,7 @@ export default async function store(
     });
 
     if (conflictTodo) {
-      throw new ConflictError("1");
+      throw new ConflictError();
     }
 
     const targetTodo = targetUser.todos.create({

@@ -318,7 +318,6 @@ describe("GET /api/v1/todos", () => {
 
       const accessTokenSecret: string =
         process.env.TEST_ACCESS_TOKEN_SECRET || "";
-      // console.log(accessTokenSecret);
       const accessTokenLife = 15; // mn
 
       // mimic access token

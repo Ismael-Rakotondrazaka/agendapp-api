@@ -12,13 +12,6 @@ export default function validateInterval(
   const startDate = roundDateTo(start, todoConfig.TODO_INTERVAL_MINUTES);
   const endDate = roundDateTo(end, todoConfig.TODO_INTERVAL_MINUTES);
 
-  // check if start is not in the future
-  if (startDate.getTime() < Date.now()) {
-    throw new BadRequestError(
-      "Invalid interval. startAt is not in the future."
-    );
-  }
-
   const diff = endDate.getTime() - startDate.getTime(); // ms
   const intervalToReferMs = todoConfig.TODO_INTERVAL_MINUTES * 60 * 1000;
   // check if interval is less than default minimum interval
