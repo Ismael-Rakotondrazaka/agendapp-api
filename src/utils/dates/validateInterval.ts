@@ -27,9 +27,11 @@ export default function validateInterval(
     startDate.getMonth() !== endDate.getMonth() ||
     startDate.getDate() !== endDate.getDate()
   ) {
-    throw new BadRequestError(
-      "Invalid interval. startAt and endAt are on different days."
-    );
+    if (startDate.getHours() !== 0 && endDate.getHours() !== 0) {
+      throw new BadRequestError(
+        "Invalid interval. startAt and endAt are on different days."
+      );
+    }
   }
 
   return {
