@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   storeTodos,
+  showTodos,
   indexTodos,
   updateTodos,
   deleteTodos,
@@ -12,6 +13,7 @@ const router: Router = Router();
 router.post("/", authMiddleware, storeTodos);
 router.get("/", authMiddleware, indexTodos);
 
+router.get("/:todoId", authMiddleware, todoMiddleware, showTodos);
 router.put("/:todoId", authMiddleware, todoMiddleware, updateTodos);
 router.delete("/:todoId", authMiddleware, todoMiddleware, deleteTodos);
 
