@@ -1,0 +1,162 @@
+import dotenv from "dotenv";
+dotenv.config();
+import request from "supertest";
+import seedDB from "../../utils/seeds/seedDB";
+import app from "../../../../app";
+import jwt from "jsonwebtoken";
+
+describe("DELETE /api/v1/todos/:todoId", () => {
+  test.each([
+    {
+      testCase: "2ANkuhxt2gOPrN4hpSqau",
+      input: {
+        user: {
+          _id: "6337deae65fabe621e3ce938",
+          firstName: "Ephraim",
+          lastName: "Jacobi",
+        },
+        todoId: "6337e296e3611b1acb901abd",
+      },
+      output: {
+        expectedLength: 2,
+      },
+    },
+    {
+      testCase: "Szqmq89wB16UoEYJAoVyY",
+      input: {
+        user: {
+          _id: "63397f73968531beecab392b",
+          firstName: "Julius",
+          lastName: "Schiller",
+        },
+        todoId: "63397f88074c0dc4737e6c3c",
+      },
+      output: {
+        expectedLength: 0,
+      },
+    },
+  ])(
+    "should return 204 No Content for deleting future todos {testCase: $testCase}",
+    async (testCase) => {
+      await seedDB(testCase.testCase);
+
+      // mimic accessToken
+      const accessTokenSecret: string =
+        process.env.TEST_ACCESS_TOKEN_SECRET || "";
+      const accessTokenLife: number = 10 * 60 * 1000; // 10mn
+      const accessToken = jwt.sign(
+        {
+          user: testCase.input.user,
+        },
+        accessTokenSecret,
+        {
+          expiresIn: `${accessTokenLife}`,
+        }
+      );
+      await request(app)
+        .delete(`/api/v1/todos/${testCase.input.todoId}`)
+        .set("Authorization", `Bearer ${accessToken}`)
+        .expect(204); // No Content
+
+      await request(app)
+        .get("/api/v1/todos")
+        .set("Authorization", `Bearer ${accessToken}`)
+        .expect(200)
+        .then((response) => {
+          expect(response.body.data.todos.length).toBe(
+            testCase.output.expectedLength
+          );
+        });
+    }
+  );
+
+  test("should return 403 Forbidden when deleting past todos {testCase: _amQYGPl3FZU0txY_Z6zm}", async () => {
+    await seedDB("_amQYGPl3FZU0txY_Z6zm");
+
+    const todoIds: string[] = [
+      "63390eb0f209f919baa94e2a",
+      "63390eb0f209f919baa94e2b",
+      "63390eb0f209f919baa94e2c",
+    ];
+
+    // mimic accessToken
+    const accessTokenSecret: string =
+      process.env.TEST_ACCESS_TOKEN_SECRET || "";
+    const accessTokenLife: number = 10 * 60 * 1000; // 10mn
+    const accessToken = jwt.sign(
+      {
+        user: {
+          _id: "63390e42879dd9ff90e79acf",
+          firstName: "Lonnie",
+          lastName: "Lang",
+        },
+      },
+      accessTokenSecret,
+      {
+        expiresIn: `${accessTokenLife}`,
+      }
+    );
+
+    await Promise.all(
+      todoIds.map(async (todoId) => {
+        await request(app)
+          .delete(`/api/v1/todos/${todoId}`)
+          .set("Authorization", `Bearer ${accessToken}`)
+          .expect("Content-Type", /json/)
+          .expect(403) // Forbidden
+          .then((response) => {
+            expect(response.body).toEqual(
+              expect.objectContaining({
+                error: expect.objectContaining({
+                  message: expect.any(String),
+                  statusText: expect.any(String),
+                  statusCode: expect.any(Number),
+                  code: expect.any(String),
+                  dateTime: expect.any(String),
+                }),
+              })
+            );
+
+            return response.body;
+          })
+          .then((body) => {
+            expect(body.error.statusText).toBe("Forbidden");
+            expect(body.error.statusCode).toBe(403);
+            expect(body.error.code).toBe("E6");
+
+            const dateTime = body.error.dateTime;
+            expect(new Date(dateTime).getTime()).not.toBeNaN();
+          });
+      })
+    );
+  });
+
+  test("should return 204 No Content for deleting a todos is passing now {testCase: bKkD-JV0x4QdbHrxuKW1B}", async () => {
+    await seedDB("bKkD-JV0x4QdbHrxuKW1B");
+
+    const todoId = "6339113572db4facefd2be95";
+
+    // mimic accessToken
+    const accessTokenSecret: string =
+      process.env.TEST_ACCESS_TOKEN_SECRET || "";
+    const accessTokenLife: number = 10 * 60 * 1000; // 10mn
+    const accessToken = jwt.sign(
+      {
+        user: {
+          _id: "63391103efb338e11d7152fa",
+          firstName: "Arvilla",
+          lastName: "Schoen",
+        },
+      },
+      accessTokenSecret,
+      {
+        expiresIn: `${accessTokenLife}`,
+      }
+    );
+
+    await request(app)
+      .delete(`/api/v1/todos/${todoId}`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .expect(204); // No Content
+  });
+});
