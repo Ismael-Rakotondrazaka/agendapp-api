@@ -427,4 +427,143 @@ describe("PUT /api/v1/todos/:todoId", () => {
         });
     }
   );
+
+  test.each([
+    {
+      testCase: "Jn-X2oStg05_0VnGkohwZ",
+      input: {
+        user: {
+          _id: "633986084ca3d3563b95de28",
+          firstName: "Itzel",
+          lastName: "Farrell",
+        },
+        todosId: [
+          "633985bf42f52701ad7081d8",
+          "633985bf42f52701ad7081d9",
+          "633985bf42f52701ad7081da",
+        ],
+      },
+    },
+    {
+      testCase: "nxy_G5Le9bVF4KY4yHkP_",
+      input: {
+        user: {
+          _id: "633986084ca3d3563b95de27",
+          firstName: "Daphney",
+          lastName: "Emard",
+        },
+        todosId: [
+          "633985bf42f52701ad7081db",
+          "633985bf42f52701ad7081dc",
+          "633985bf42f52701ad7081dd",
+        ],
+      },
+    },
+  ])(
+    "should return 404 Not Found if todoId doesn't exist {testCase: $testCase}",
+    async (testCase) => {
+      await seedDB(testCase.testCase);
+
+      // mimic accessToken
+      const accessTokenSecret: string =
+        process.env.TEST_ACCESS_TOKEN_SECRET || "";
+      const accessTokenLife: number = 10 * 60 * 1000; // 10mn
+      const accessToken = jwt.sign(
+        {
+          user: testCase.input.user,
+        },
+        accessTokenSecret,
+        {
+          expiresIn: `${accessTokenLife}`,
+        }
+      );
+
+      await Promise.all(
+        testCase.input.todosId.map(async (todoId) => {
+          await request(app)
+            .put(`/api/v1/todos/${todoId}`)
+            .set("Authorization", `Bearer ${accessToken}`)
+            .expect("Content-Type", /json/)
+            .expect(404)
+            .then((response) => {
+              expect(response.body).toEqual(
+                expect.objectContaining({
+                  error: expect.objectContaining({
+                    message: expect.any(String),
+                    statusText: expect.any(String),
+                    statusCode: expect.any(Number),
+                    code: expect.any(String),
+                    dateTime: expect.any(String),
+                  }),
+                })
+              );
+
+              return response.body;
+            })
+            .then((body) => {
+              expect(body.error.statusText).toBe("Not Found");
+              expect(body.error.statusCode).toBe(404);
+              expect(body.error.code).toBe("E3");
+
+              const dateTime = body.error.dateTime;
+              expect(new Date(dateTime).getTime()).not.toBeNaN();
+            });
+        })
+      );
+    }
+  );
+
+  test.each(["tenetur-nihilim", "jutstABadFormat:", "no!,tssr"])(
+    "should return 404 Not Found if todoId is bad format {testCase: yb8ybXLykSuOkNXRQosWk}",
+    async (todoId) => {
+      await seedDB("yb8ybXLykSuOkNXRQosWk");
+
+      // mimic accessToken
+      const accessTokenSecret: string =
+        process.env.TEST_ACCESS_TOKEN_SECRET || "";
+      const accessTokenLife: number = 10 * 60 * 1000; // 10mn
+      const accessToken = jwt.sign(
+        {
+          user: {
+            _id: "63398d1424ee9e6259de99f4",
+            firstName: "Eliezer",
+            lastName: "McLaughlin",
+          },
+        },
+        accessTokenSecret,
+        {
+          expiresIn: `${accessTokenLife}`,
+        }
+      );
+
+      await request(app)
+        .put(`/api/v1/todos/${todoId}`)
+        .set("Authorization", `Bearer ${accessToken}`)
+        .expect("Content-Type", /json/)
+        .expect(404)
+        .then((response) => {
+          expect(response.body).toEqual(
+            expect.objectContaining({
+              error: expect.objectContaining({
+                message: expect.any(String),
+                statusText: expect.any(String),
+                statusCode: expect.any(Number),
+                code: expect.any(String),
+                dateTime: expect.any(String),
+              }),
+            })
+          );
+
+          return response.body;
+        })
+        .then((body) => {
+          expect(body.error.statusText).toBe("Not Found");
+          expect(body.error.statusCode).toBe(404);
+          expect(body.error.code).toBe("E3");
+
+          const dateTime = body.error.dateTime;
+          expect(new Date(dateTime).getTime()).not.toBeNaN();
+        });
+    }
+  );
 });
