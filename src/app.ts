@@ -17,6 +17,11 @@ app.use("/api/v1/auth", authRoutes);
 import todoRoutes from "./routes/v1/todos/index";
 app.use("/api/v1/todos", todoRoutes);
 
+import { NotFoundError } from "./utils/errors";
+app.all("*", () => {
+  throw new NotFoundError();
+});
+
 import { errorMiddleware } from "./middlewares/index";
 app.use(errorMiddleware);
 
