@@ -22,6 +22,8 @@ const seed: TSeed[] = [
           faker.internet.password(),
           passwordSaltRounds
         ),
+        createdAt: faker.date.recent(),
+        updatedAt: faker.date.recent(),
         refreshTokens: [],
         todos: [],
       },

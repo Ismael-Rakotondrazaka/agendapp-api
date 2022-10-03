@@ -13,8 +13,8 @@ const seed: TSeed[] = [
         email: "Daphney_Emard@gmail.com",
         password:
           "$2b$10$Ic2CZ2gnJ/zcJPZfW22MEer.zMKfCkwNeD5j6eyI1tEh7OLnUfZ/m",
-        createdAt: "2022-08-29T23:47:23.344Z",
-        updatedAt: "2022-09-02T21:29:13.102Z",
+        createdAt: new Date("2022-08-29T23:47:23.344Z"),
+        updatedAt: new Date("2022-09-02T21:29:13.102Z"),
         refreshTokens: [],
         todos: [
           {
@@ -25,7 +25,8 @@ const seed: TSeed[] = [
             level: "important",
             startAt: faker.date.future(),
             endAt: faker.date.future(),
-            createdAt: "2021-10-19T00:40:48.170Z",
+            createdAt: new Date("2021-10-19T00:40:48.170Z"),
+            updatedAt: new Date("2021-10-19T00:40:48.170Z"),
           },
           {
             _id: new ObjectId("633987426004f9a457bd03a5"),
@@ -35,7 +36,8 @@ const seed: TSeed[] = [
             level: "normal",
             startAt: faker.date.future(),
             endAt: faker.date.future(),
-            createdAt: "2021-07-25T05:19:29.000Z",
+            createdAt: new Date("2021-07-25T05:19:29.000Z"),
+            updatedAt: new Date("2021-07-25T05:19:29.000Z"),
           },
         ],
       },

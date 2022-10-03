@@ -13,8 +13,8 @@ const seed: TSeed[] = [
         email: "Kiley.Senger61@gmail.com",
         password:
           "$2b$10$UbohSUg4v4D9Le6GBSVbXeKfligM1NpDTxuRDxTafICtQNlnYB..K",
-        createdAt: "2022-09-05T15:01:01.139Z",
-        updatedAt: "2022-09-23T04:27:54.188Z",
+        createdAt: new Date("2022-09-05T15:01:01.139Z"),
+        updatedAt: new Date("2022-09-23T04:27:54.188Z"),
         refreshTokens: [],
         todos: [
           {
@@ -25,7 +25,8 @@ const seed: TSeed[] = [
             level: "important",
             startAt: faker.date.future(),
             endAt: faker.date.future(),
-            createdAt: "2022-01-17T02:51:46.927Z",
+            createdAt: new Date("2022-01-17T02:51:46.927Z"),
+            updatedAt: new Date("2022-01-17T02:51:46.927Z"),
           },
           {
             _id: new ObjectId("63398a4837dfa028f1519afe"),
@@ -36,7 +37,8 @@ const seed: TSeed[] = [
             level: "important",
             startAt: faker.date.future(),
             endAt: faker.date.future(),
-            createdAt: "2021-12-14T07:48:23.206Z",
+            createdAt: new Date("2021-12-14T07:48:23.206Z"),
+            updatedAt: new Date("2021-12-14T07:48:23.206Z"),
           },
         ],
       },

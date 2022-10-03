@@ -19,6 +19,7 @@ describe("GET /api/v1/todos/:todoId", () => {
         startAt: "2022-03-05T05:30:00.000Z",
         endAt: "2022-03-05T06:00:00.000Z",
         createdAt: "2021-11-23T06:50:20.867Z",
+        updatedAt: "2021-11-23T06:50:20.867Z",
       },
     },
     {
@@ -33,6 +34,7 @@ describe("GET /api/v1/todos/:todoId", () => {
         startAt: "2021-11-02T05:15:00.000Z",
         endAt: "2021-11-02T05:30:00.000Z",
         createdAt: "2021-06-18T00:09:45.773Z",
+        updatedAt: "2021-06-18T00:09:45.773Z",
       },
     },
     {
@@ -45,6 +47,7 @@ describe("GET /api/v1/todos/:todoId", () => {
         status: "done",
         level: "important",
         createdAt: "2021-12-26T16:37:31.402Z",
+        updatedAt: "2021-12-26T16:37:31.402Z",
       },
     },
     {
@@ -56,6 +59,7 @@ describe("GET /api/v1/todos/:todoId", () => {
         status: "failed",
         level: "important",
         createdAt: "2021-07-21T05:58:48.143Z",
+        updatedAt: "2021-07-21T05:58:48.143Z",
       },
     },
   ])(
@@ -99,6 +103,7 @@ describe("GET /api/v1/todos/:todoId", () => {
                   startAt: expect.any(String),
                   endAt: expect.any(String),
                   createdAt: expect.any(String),
+                  updatedAt: expect.any(String),
                 }),
               }),
             })
@@ -118,14 +123,17 @@ describe("GET /api/v1/todos/:todoId", () => {
           const startAt: string = body.data.todo.startAt;
           const endAt: string = body.data.todo.endAt;
           const createdAt: string = body.data.todo.createdAt;
+          const updatedAt: string = body.data.todo.updatedAt;
 
           const startAtTime: number = new Date(startAt).getTime();
           const endAtTime: number = new Date(endAt).getTime();
           const createdAtTime: number = new Date(createdAt).getTime();
+          const updatedAtTime: number = new Date(updatedAt).getTime();
 
           expect(startAtTime).not.toBeNaN();
           expect(endAtTime).not.toBeNaN();
           expect(createdAtTime).not.toBeNaN();
+          expect(updatedAtTime).not.toBeNaN();
 
           expect(endAtTime).toBeGreaterThan(startAtTime);
           expect(startAtTime).toBeGreaterThanOrEqual(createdAtTime);

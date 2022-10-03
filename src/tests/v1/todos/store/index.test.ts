@@ -64,6 +64,7 @@ describe("POST /api/v1/todos", () => {
                 startAt: expect.any(String),
                 endAt: expect.any(String),
                 createdAt: expect.any(String),
+                updatedAt: expect.any(String),
               }),
             }),
           })
@@ -75,14 +76,17 @@ describe("POST /api/v1/todos", () => {
         const startAt = body.data.todo.startAt;
         const endAt = body.data.todo.endAt;
         const createdAt = body.data.todo.createdAt;
+        const updatedAt = body.data.todo.updatedAt;
 
         const startAtTime = new Date(startAt).getTime();
         const endAtTime = new Date(endAt).getTime();
         const createdAtTime = new Date(createdAt).getTime();
+        const updatedAtTime = new Date(updatedAt).getTime();
 
         expect(startAtTime).not.toBeNaN();
         expect(endAtTime).not.toBeNaN();
         expect(createdAtTime).not.toBeNaN();
+        expect(updatedAtTime).not.toBeNaN();
 
         expect(endAtTime).toBeGreaterThan(startAtTime);
         expect(startAtTime).toBeGreaterThanOrEqual(createdAtTime);
@@ -151,6 +155,7 @@ describe("POST /api/v1/todos", () => {
                 startAt: expect.any(String),
                 endAt: expect.any(String),
                 createdAt: expect.any(String),
+                updatedAt: expect.any(String),
               }),
             }),
           })
@@ -162,14 +167,17 @@ describe("POST /api/v1/todos", () => {
         const startAt = body.data.todo.startAt;
         const endAt = body.data.todo.endAt;
         const createdAt = body.data.todo.createdAt;
+        const updatedAt = body.data.todo.updatedAt;
 
         const startAtTime = new Date(startAt).getTime();
         const endAtTime = new Date(endAt).getTime();
         const createdAtTime = new Date(createdAt).getTime();
+        const updatedAtTime = new Date(updatedAt).getTime();
 
         expect(startAtTime).not.toBeNaN();
         expect(endAtTime).not.toBeNaN();
         expect(createdAtTime).not.toBeNaN();
+        expect(updatedAtTime).not.toBeNaN();
 
         expect(endAtTime).toBeGreaterThan(startAtTime);
         expect(startAtTime).toBeGreaterThanOrEqual(createdAtTime);
@@ -237,6 +245,7 @@ describe("POST /api/v1/todos", () => {
                 startAt: expect.any(String),
                 endAt: expect.any(String),
                 createdAt: expect.any(String),
+                updatedAt: expect.any(String),
               }),
             }),
           })
@@ -248,14 +257,17 @@ describe("POST /api/v1/todos", () => {
         const startAt = body.data.todo.startAt;
         const endAt = body.data.todo.endAt;
         const createdAt = body.data.todo.createdAt;
+        const updatedAt = body.data.todo.updatedAt;
 
         const startAtTime = new Date(startAt).getTime();
         const endAtTime = new Date(endAt).getTime();
         const createdAtTime = new Date(createdAt).getTime();
+        const updatedAtTime = new Date(updatedAt).getTime();
 
         expect(startAtTime).not.toBeNaN();
         expect(endAtTime).not.toBeNaN();
         expect(createdAtTime).not.toBeNaN();
+        expect(updatedAtTime).not.toBeNaN();
 
         expect(endAtTime).toBeGreaterThan(startAtTime);
         expect(startAtTime).toBeGreaterThanOrEqual(createdAtTime);
@@ -570,6 +582,7 @@ describe("POST /api/v1/todos", () => {
                   startAt: expect.any(String),
                   endAt: expect.any(String),
                   createdAt: expect.any(String),
+                  updatedAt: expect.any(String),
                 }),
               }),
             })
@@ -581,14 +594,17 @@ describe("POST /api/v1/todos", () => {
           const startAt = body.data.todo.startAt;
           const endAt = body.data.todo.endAt;
           const createdAt = body.data.todo.createdAt;
+          const updatedAt = body.data.todo.updatedAt;
 
           const startAtTime = new Date(startAt).getTime();
           const endAtTime = new Date(endAt).getTime();
           const createdAtTime = new Date(createdAt).getTime();
+          const updatedAtTime = new Date(updatedAt).getTime();
 
           expect(startAtTime).not.toBeNaN();
           expect(endAtTime).not.toBeNaN();
           expect(createdAtTime).not.toBeNaN();
+          expect(updatedAtTime).not.toBeNaN();
 
           expect(endAtTime).toBeGreaterThan(startAtTime);
           expect(startAtTime).toBeGreaterThanOrEqual(createdAtTime);
