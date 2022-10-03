@@ -15,5 +15,6 @@ export default function todoResource(
     startAt: resource.startAt,
     endAt: resource.endAt,
     createdAt: resource.createdAt,
+    updatedAt: resource.updatedAt,
   };
 }

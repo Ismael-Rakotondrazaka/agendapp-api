@@ -30,6 +30,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-01-09T22:30:00.000Z",
               endAt: "2022-01-09T22:45:00.000Z",
               createdAt: "2021-04-28T14:59:41.566Z",
+              updatedAt: "2021-04-28T14:59:41.566Z",
             },
             {
               _id: "6332869880a239ec6262caed",
@@ -40,6 +41,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-07-06T14:00:00.000Z",
               endAt: "2022-07-06T15:00:00.000Z",
               createdAt: "2021-11-21T07:13:11.154Z",
+              updatedAt: "2021-11-21T07:13:11.154Z",
             },
             {
               _id: "6332869880a239ec6262caee",
@@ -50,6 +52,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-03-30T21:45:00.000Z",
               endAt: "2022-03-30T22:15:00.000Z",
               createdAt: "2022-03-07T18:37:48.152Z",
+              updatedAt: "2022-03-07T18:37:48.152Z",
             },
           ],
         },
@@ -78,6 +81,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-05-07T15:15:00.000Z",
               endAt: "2022-05-07T15:30:00.000Z",
               createdAt: "2021-12-31T22:32:13.999Z",
+              updatedAt: "2021-12-31T22:32:13.999Z",
             },
             {
               _id: "6332983dd0a7c6606e36a276",
@@ -88,6 +92,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2021-09-27T21:00:00.000Z",
               endAt: "2021-09-27T21:30:00.000Z",
               createdAt: "2021-07-19T15:36:00.277Z",
+              updatedAt: "2021-07-19T15:36:00.277Z",
             },
             {
               _id: "6332983dd0a7c6606e36a277",
@@ -99,6 +104,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-08-18T15:15:00.000Z",
               endAt: "2022-08-18T15:45:00.000Z",
               createdAt: "2021-11-24T13:02:04.166Z",
+              updatedAt: "2021-11-24T13:02:04.166Z",
             },
             {
               _id: "6332983dd0a7c6606e36a278",
@@ -110,6 +116,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-03-30T08:30:00.000Z",
               endAt: "2022-03-30T09:30:00.000Z",
               createdAt: "2021-07-05T16:04:28.296Z",
+              updatedAt: "2021-07-05T16:04:28.296Z",
             },
             {
               _id: "6332983dd0a7c6606e36a279",
@@ -121,6 +128,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2021-10-07T14:45:00.000Z",
               endAt: "2021-10-07T15:45:00.000Z",
               createdAt: "2021-04-05T22:51:01.161Z",
+              updatedAt: "2021-04-05T22:51:01.161Z",
             },
             {
               _id: "6332983dd0a7c6606e36a27a",
@@ -132,6 +140,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-06-24T01:15:00.000Z",
               endAt: "2022-06-24T02:00:00.000Z",
               createdAt: "2022-04-09T10:46:43.942Z",
+              updatedAt: "2022-04-09T10:46:43.942Z",
             },
             {
               _id: "6332983dd0a7c6606e36a27b",
@@ -143,6 +152,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2021-12-09T15:30:00.000Z",
               endAt: "2021-12-09T16:30:00.000Z",
               createdAt: "2021-10-06T03:52:13.508Z",
+              updatedAt: "2021-10-06T03:52:13.508Z",
             },
             {
               _id: "6332983dd0a7c6606e36a27c",
@@ -154,6 +164,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-03-10T21:15:00.000Z",
               endAt: "2022-03-10T22:00:00.000Z",
               createdAt: "2021-03-29T21:22:50.692Z",
+              updatedAt: "2021-03-29T21:22:50.692Z",
             },
             {
               _id: "6332983dd0a7c6606e36a27d",
@@ -165,6 +176,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-04-10T08:00:00.000Z",
               endAt: "2022-04-10T08:15:00.000Z",
               createdAt: "2022-01-01T03:09:18.961Z",
+              updatedAt: "2022-01-01T03:09:18.961Z",
             },
             {
               _id: "6332983dd0a7c6606e36a27e",
@@ -176,6 +188,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-04-15T19:15:00.000Z",
               endAt: "2022-04-15T20:15:00.000Z",
               createdAt: "2022-04-09T23:18:53.382Z",
+              updatedAt: "2022-04-09T23:18:53.382Z",
             },
             {
               _id: "6332983dd0a7c6606e36a27f",
@@ -187,6 +200,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-05-22T06:15:00.000Z",
               endAt: "2022-05-22T07:15:00.000Z",
               createdAt: "2021-11-23T21:18:22.247Z",
+              updatedAt: "2021-11-23T21:18:22.247Z",
             },
             {
               _id: "6332983dd0a7c6606e36a280",
@@ -197,6 +211,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-02-20T15:00:00.000Z",
               endAt: "2022-02-20T15:45:00.000Z",
               createdAt: "2021-05-18T22:25:48.155Z",
+              updatedAt: "2021-05-18T22:25:48.155Z",
             },
             {
               _id: "6332983dd0a7c6606e36a281",
@@ -207,6 +222,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2021-12-08T02:45:00.000Z",
               endAt: "2021-12-08T03:00:00.000Z",
               createdAt: "2021-10-17T03:31:11.136Z",
+              updatedAt: "2021-10-17T03:31:11.136Z",
             },
             {
               _id: "6332983dd0a7c6606e36a282",
@@ -217,6 +233,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-05-29T09:45:00.000Z",
               endAt: "2022-05-29T10:15:00.000Z",
               createdAt: "2022-05-19T07:39:51.610Z",
+              updatedAt: "2022-05-19T07:39:51.610Z",
             },
             {
               _id: "6332983dd0a7c6606e36a283",
@@ -227,6 +244,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2021-10-20T23:15:00.000Z",
               endAt: "2021-10-20T23:45:00.000Z",
               createdAt: "2021-10-20T16:31:14.793Z",
+              updatedAt: "2021-10-20T16:31:14.793Z",
             },
             {
               _id: "6332983dd0a7c6606e36a284",
@@ -237,6 +255,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2021-12-05T11:00:00.000Z",
               endAt: "2021-12-05T11:45:00.000Z",
               createdAt: "2021-08-22T01:46:56.234Z",
+              updatedAt: "2021-08-22T01:46:56.234Z",
             },
             {
               _id: "6332983dd0a7c6606e36a285",
@@ -248,6 +267,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-02-10T19:45:00.000Z",
               endAt: "2022-02-10T20:30:00.000Z",
               createdAt: "2022-01-27T21:38:54.918Z",
+              updatedAt: "2022-01-27T21:38:54.918Z",
             },
             {
               _id: "6332983dd0a7c6606e36a286",
@@ -258,6 +278,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2021-12-07T15:15:00.000Z",
               endAt: "2021-12-07T15:45:00.000Z",
               createdAt: "2021-05-06T22:20:06.920Z",
+              updatedAt: "2021-05-06T22:20:06.920Z",
             },
             {
               _id: "6332983dd0a7c6606e36a287",
@@ -268,6 +289,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-07-09T20:30:00.000Z",
               endAt: "2022-07-09T20:45:00.000Z",
               createdAt: "2022-05-18T11:08:50.252Z",
+              updatedAt: "2022-05-18T11:08:50.252Z",
             },
             {
               _id: "6332983dd0a7c6606e36a288",
@@ -279,6 +301,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2021-11-29T05:45:00.000Z",
               endAt: "2021-11-29T06:15:00.000Z",
               createdAt: "2021-06-26T16:54:16.905Z",
+              updatedAt: "2021-06-26T16:54:16.905Z",
             },
             {
               _id: "6332983dd0a7c6606e36a289",
@@ -290,6 +313,7 @@ describe("GET /api/v1/todos", () => {
               startAt: "2022-04-02T22:15:00.000Z",
               endAt: "2022-04-02T23:00:00.000Z",
               createdAt: "2022-01-31T22:55:24.631Z",
+              updatedAt: "2022-01-31T22:55:24.631Z",
             },
           ],
         },
@@ -381,6 +405,7 @@ describe("GET /api/v1/todos", () => {
                 startAt: "2022-03-28T10:00:00.000Z",
                 endAt: "2022-03-28T11:00:00.000Z",
                 createdAt: "2021-11-09T02:08:11.172Z",
+                updatedAt: "2021-11-09T02:08:11.172Z",
               },
               {
                 _id: "6332aaf69a2562484d41e228",
@@ -392,6 +417,7 @@ describe("GET /api/v1/todos", () => {
                 startAt: "2022-06-12T16:45:00.000Z",
                 endAt: "2022-06-12T17:00:00.000Z",
                 createdAt: "2021-12-07T09:37:19.650Z",
+                updatedAt: "2021-12-07T09:37:19.650Z",
               },
               {
                 _id: "6332aaf69a2562484d41e229",
@@ -403,6 +429,7 @@ describe("GET /api/v1/todos", () => {
                 startAt: "2021-11-24T14:30:00.000Z",
                 endAt: "2021-11-24T15:15:00.000Z",
                 createdAt: "2021-06-26T19:13:29.451Z",
+                updatedAt: "2021-06-26T19:13:29.451Z",
               },
             ],
           },
@@ -449,6 +476,7 @@ describe("GET /api/v1/todos", () => {
                 startAt: "2022-05-20T14:45:00.000Z",
                 endAt: "2022-05-20T15:00:00.000Z",
                 createdAt: "2021-09-26T01:56:38.432Z",
+                updatedAt: "2021-09-26T01:56:38.432Z",
               },
             ],
           },
@@ -528,6 +556,7 @@ describe("GET /api/v1/todos", () => {
                       startAt: expect.any(String),
                       endAt: expect.any(String),
                       createdAt: expect.any(String),
+                      updatedAt: expect.any(String),
                     }),
                   }),
                 })
@@ -545,14 +574,17 @@ describe("GET /api/v1/todos", () => {
               const startAt = body.data.todo.startAt;
               const endAt = body.data.todo.endAt;
               const createdAt = body.data.todo.createdAt;
+              const updatedAt = body.data.todo.updatedAt;
 
               const startAtTime = new Date(startAt).getTime();
               const endAtTime = new Date(endAt).getTime();
               const createdAtTime = new Date(createdAt).getTime();
+              const updatedAtTime = new Date(updatedAt).getTime();
 
               expect(startAtTime).not.toBeNaN();
               expect(endAtTime).not.toBeNaN();
               expect(createdAtTime).not.toBeNaN();
+              expect(updatedAtTime).not.toBeNaN();
 
               return todo;
             })

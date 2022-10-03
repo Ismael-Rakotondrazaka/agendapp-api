@@ -17,8 +17,8 @@ const seed: TSeed[] = [
         email: "Maci.Powlowski@yahoo.com",
         password:
           "$2b$10$iqgxWMwz6atg3MOYTzVScOP2SjT4El53D318w8FLlQlD9S4XGQege",
-        createdAt: "2022-04-29T19:17:31.313Z",
-        updatedAt: "2022-06-02T15:06:22.508Z",
+        createdAt: new Date("2022-04-29T19:17:31.313Z"),
+        updatedAt: new Date("2022-06-02T15:06:22.508Z"),
         refreshTokens: [],
         todos: [
           {
@@ -30,7 +30,8 @@ const seed: TSeed[] = [
             level: "normal",
             startAt: startAt,
             endAt: endAt,
-            createdAt: "2021-03-24T15:25:27.214Z",
+            createdAt: new Date("2021-03-24T15:25:27.214Z"),
+            updatedAt: new Date("2021-03-24T15:25:27.214Z"),
           },
         ],
       },

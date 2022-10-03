@@ -14,7 +14,8 @@ export interface ITodo {
   status: string;
   startAt: Date;
   endAt: Date;
-  createdAt: Date;
+  createdAt: Date | string | number;
+  updatedAt: Date | string | number;
 }
 
 export type TUserDocumentProps = {
@@ -55,7 +56,8 @@ export type TTodoResource = {
   status: string;
   startAt: Date;
   endAt: Date;
-  createdAt: Date;
+  createdAt: Date | string | number;
+  updatedAt: Date | string | number;
 };
 
 // Response

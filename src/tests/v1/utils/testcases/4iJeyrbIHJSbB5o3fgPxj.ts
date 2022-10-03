@@ -1,6 +1,7 @@
 import { TSeed } from "../../types";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
+import { faker } from "@faker-js/faker";
 
 const passwordSaltRounds = 10;
 
@@ -20,7 +21,10 @@ const seed: TSeed[] = [
         lastName,
         email,
         password: bcrypt.hashSync(password, passwordSaltRounds),
+        createdAt: faker.date.recent(),
+        updatedAt: faker.date.recent(),
         refreshTokens: [],
+        dotos: [],
       },
     ],
   },

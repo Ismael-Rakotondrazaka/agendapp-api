@@ -124,6 +124,8 @@ describe("PUT /api/v1/todos/:todoId", () => {
       originalStartAt.setHours(7, 0, 0, 0);
       const originalEndAt = new Date(Date.now() + 48 * 60 * 60 * 1000); // after tomorrow
       originalEndAt.setHours(8, 0, 0, 0);
+      const originalCreatedAt = "2021-03-24T15:25:27.214Z";
+      const originalUpdatedAt = "2021-03-24T15:25:27.214Z";
 
       const data: Record<string, string> = {
         title: "molestias-consequuntur-excepturi",
@@ -176,6 +178,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
                   startAt: expect.any(String),
                   endAt: expect.any(String),
                   createdAt: expect.any(String),
+                  updatedAt: expect.any(String),
                 }),
               }),
             })
@@ -186,11 +189,16 @@ describe("PUT /api/v1/todos/:todoId", () => {
         .then((body) => {
           const updatedTodo = body.data.todo;
 
-          expect(updatedTodo).toEqual(
-            expect.objectContaining({
-              ...data,
-            })
-          );
+          expect(updatedTodo._id).toBe(originalTodoId);
+          expect(updatedTodo.title).toBe(data.title);
+          expect(updatedTodo.description).toBe(data.description);
+          expect(updatedTodo.status).toBe(data.status);
+          expect(updatedTodo.startAt).toBe(data.startAt);
+          expect(updatedTodo.endAt).toBe(data.endAt);
+          expect(updatedTodo.createdAt).toBe(originalCreatedAt);
+          expect(updatedTodo.updatedAt).not.toBe(originalUpdatedAt);
+
+          expect(new Date(updatedTodo.updatedAt).getTime()).not.toBeNaN();
         });
     }
   );

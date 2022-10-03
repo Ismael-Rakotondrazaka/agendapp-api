@@ -16,8 +16,8 @@ const seed: TSeed[] = [
         email: "Torey_Lowe@yahoo.com",
         password:
           "$2b$10$d3ItuFZROFWogK2Jntde9uoxdVQbrf1F24D/MFvj5a/juBZSBPe6C",
-        createdAt: "2022-04-01T22:40:43.584Z",
-        updatedAt: "2022-04-08T04:57:21.074Z",
+        createdAt: new Date("2022-04-01T22:40:43.584Z"),
+        updatedAt: new Date("2022-04-08T04:57:21.074Z"),
         refreshTokens: [],
         todos: [
           {
@@ -29,7 +29,8 @@ const seed: TSeed[] = [
             level: "important",
             startAt: startAt,
             endAt: endAt,
-            createdAt: "2021-10-25T21:38:26.225Z",
+            createdAt: new Date("2021-10-25T21:38:26.225Z"),
+            updatedAt: new Date("2021-10-25T21:38:26.225Z"),
           },
         ],
       },

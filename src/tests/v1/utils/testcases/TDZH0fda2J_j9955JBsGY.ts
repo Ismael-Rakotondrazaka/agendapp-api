@@ -12,8 +12,9 @@ const seed: TSeed[] = [
         email: "Fiona_Wintheiser@yahoo.com",
         password:
           "$2b$10$xQKytHRekWU6vDDnjbeP4OJ3PnAPtQGSN8Gfy9cCMfCWEF3M/mkVy",
-        createdAt: "2022-01-23T14:11:20.038Z",
-        updatedAt: "2022-01-28T17:17:43.231Z",
+        createdAt: new Date("2022-01-23T14:11:20.038Z"),
+        updatedAt: new Date("2022-01-28T17:17:43.231Z"),
+        refreshTokens: [],
         todos: [
           {
             _id: new ObjectId("6332b0ddc1320a76d98b71b7"),
@@ -22,9 +23,10 @@ const seed: TSeed[] = [
               "generating the interface won't do anything, we need to parse the primary COM port!",
             status: "done",
             level: "normal",
-            startAt: "2022-05-20T14:45:00.000Z",
-            endAt: "2022-05-20T15:00:00.000Z",
-            createdAt: "2021-09-26T01:56:38.432Z",
+            startAt: new Date("2022-05-20T14:45:00.000Z"),
+            endAt: new Date("2022-05-20T15:00:00.000Z"),
+            createdAt: new Date("2021-09-26T01:56:38.432Z"),
+            updatedAt: new Date("2021-09-26T01:56:38.432Z"),
           },
         ],
       },

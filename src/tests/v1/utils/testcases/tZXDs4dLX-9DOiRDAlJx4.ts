@@ -17,8 +17,8 @@ const seed: TSeed[] = [
         email: "Gregory.Botsford7@yahoo.com",
         password:
           "$2b$10$GiSDsqI52RZn.V73oV/v/u8HvgsaLSfcZKYj1ah1XSuXmmOfen9Gm",
-        createdAt: "2022-03-20T22:06:35.266Z",
-        updatedAt: "2022-03-24T22:25:29.735Z",
+        createdAt: new Date("2022-03-20T22:06:35.266Z"),
+        updatedAt: new Date("2022-03-24T22:25:29.735Z"),
         refreshTokens: [],
         todos: [
           {
@@ -29,7 +29,8 @@ const seed: TSeed[] = [
             level: "important",
             startAt: startAt,
             endAt: endAt,
-            createdAt: "2021-09-10T13:34:13.547Z",
+            createdAt: new Date("2021-09-10T13:34:13.547Z"),
+            updatedAt: new Date("2021-09-10T13:34:13.547Z"),
           },
         ],
       },

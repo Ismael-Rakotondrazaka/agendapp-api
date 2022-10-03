@@ -13,8 +13,8 @@ const seed: TSeed[] = [
         email: "Deja_Skiles7@hotmail.com",
         password:
           "$2b$10$4tP1gwyB0Xg8mAG6qXlUwu4nbfJLcXyvtLFogTWGgXYiD7qbWifSC",
-        createdAt: "2021-11-30T16:05:02.797Z",
-        updatedAt: "2022-01-14T06:11:58.312Z",
+        createdAt: new Date("2021-11-30T16:05:02.797Z"),
+        updatedAt: new Date("2022-01-14T06:11:58.312Z"),
         refreshTokens: [],
         todos: [
           {
@@ -26,7 +26,8 @@ const seed: TSeed[] = [
             level: "normal",
             startAt: faker.date.future(),
             endAt: faker.date.future(),
-            createdAt: "2021-09-08T10:20:51.793Z",
+            createdAt: new Date("2021-09-08T10:20:51.793Z"),
+            updatedAt: new Date("2021-09-08T10:20:51.793Z"),
           },
         ],
       },

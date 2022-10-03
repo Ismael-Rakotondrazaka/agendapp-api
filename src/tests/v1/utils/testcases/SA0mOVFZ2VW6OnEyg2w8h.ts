@@ -19,6 +19,8 @@ const seed: TSeed[] = [
         lastName,
         email: faker.internet.email(),
         password: bcrypt.hashSync(faker.internet.password(), passwordSaltRound),
+        createdAt: faker.date.recent(),
+        updatedAt: faker.date.recent(),
         refreshTokens: [],
         todos: [],
       },

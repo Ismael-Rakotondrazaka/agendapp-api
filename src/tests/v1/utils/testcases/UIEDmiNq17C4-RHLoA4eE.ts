@@ -12,8 +12,8 @@ const seed: TSeed[] = [
         email: "Dasia.Armstrong@yahoo.com",
         password:
           "$2b$10$Gdku2v7pjNs5QFhgLJih0udfjc8IFpN4t1SmCuFyjKRgB.3GNGlPa",
-        createdAt: "2022-03-17T16:51:09.687Z",
-        updatedAt: "2022-03-23T21:32:51.826Z",
+        createdAt: new Date("2022-03-17T16:51:09.687Z"),
+        updatedAt: new Date("2022-03-23T21:32:51.826Z"),
         refreshTokens: [],
         todos: [],
       },

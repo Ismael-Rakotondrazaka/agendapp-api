@@ -12,8 +12,8 @@ const seed: TSeed[] = [
         email: "Camron7@hotmail.com",
         password:
           "$2b$10$tdBgD2JQUy6lLChzuXeyde90tRQUbM5b1MjsxbHlgZpWfTNt7IzXS",
-        createdAt: "2022-05-21T14:56:10.168Z",
-        updatedAt: "2022-05-31T07:49:55.735Z",
+        createdAt: new Date("2022-05-21T14:56:10.168Z"),
+        updatedAt: new Date("2022-05-31T07:49:55.735Z"),
         refreshTokens: [],
         todos: [],
       },
