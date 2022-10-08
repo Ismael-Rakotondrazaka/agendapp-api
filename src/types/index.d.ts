@@ -19,8 +19,8 @@ export interface ITodo {
 }
 
 export type TUserDocumentProps = {
-  refreshTokens: Types.DocumentArray<IRefreshTokens>;
-  todos: Types.DocumentArray<ITodo>;
+  refreshTokens: Types.DocumentArray<Types.ObjectId & IRefreshTokens>;
+  todos: Types.DocumentArray<Types.ObjectId & ITodo>;
 };
 
 export interface IUser {
