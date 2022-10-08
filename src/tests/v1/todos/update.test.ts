@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import request from "supertest";
-import seedDB from "../../utils/seeds/seedDB";
-import app from "../../../../app";
+import seedDB from "../utils/seeds/seedDB";
+import app from "../../../app";
 import jwt from "jsonwebtoken";
 import { faker } from "@faker-js/faker";
 
