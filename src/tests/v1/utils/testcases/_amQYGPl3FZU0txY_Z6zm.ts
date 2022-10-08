@@ -15,7 +15,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-01-04T20:18:19.395Z"),
         updatedAt: new Date("2022-01-20T12:52:40.693Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("63390eb0f209f919baa94e2a"),
             title: "sint-neque-vel-porro-aut",

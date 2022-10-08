@@ -15,7 +15,7 @@ const seed: TSeed[] = [
           "$2b$10$ZhPswCkNX/F5In9gHADpLew1DEHPd72ihMcRrrgZqOgxOvOEv.KTu",
         createdAt: new Date("2022-06-29T08:45:08.742Z"),
         updatedAt: new Date("2022-08-27T10:19:35.708Z"),
-        todos: [
+        events: [
           {
             _id: new ObjectId("63397f88074c0dc4737e6c3c"),
             title: "iste-est",

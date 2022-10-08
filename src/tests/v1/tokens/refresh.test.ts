@@ -129,7 +129,7 @@ describe("POST /api/v1/tokens/refresh", () => {
             );
 
             await request(app)
-              .get("/api/v1/todos")
+              .get("/api/v1/events")
               .set("Authorization", `Bearer ${accessToken}`)
               .expect("Content-Type", /json/)
               .expect(200)
@@ -137,7 +137,7 @@ describe("POST /api/v1/tokens/refresh", () => {
                 expect(response.body).toEqual(
                   expect.objectContaining({
                     data: expect.objectContaining({
-                      todos: expect.any(Array),
+                      events: expect.any(Array),
                     }),
                   })
                 );

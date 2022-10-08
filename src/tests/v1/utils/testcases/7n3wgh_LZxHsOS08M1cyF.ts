@@ -19,7 +19,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-04-01T22:40:43.584Z"),
         updatedAt: new Date("2022-04-08T04:57:21.074Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("63367477f6c3abf0982487b1"),
             title: "sapiente",

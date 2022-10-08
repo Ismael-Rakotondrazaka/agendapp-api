@@ -14,7 +14,7 @@ const seed: TSeed[] = [
           "$2b$10$.GvbaW2Y17Qnr0As7RE6Cu2NkK69y4qqhBZEov7PSm3dyFtuPbqhW",
         createdAt: new Date("2021-12-26T13:48:22.502Z"),
         updatedAt: new Date("2022-01-23T11:57:50.031Z"),
-        todos: [
+        events: [
           {
             _id: new ObjectId("6332869880a239ec6262caec"),
             title: "libero-accusantium-iusto-qui-fugit",

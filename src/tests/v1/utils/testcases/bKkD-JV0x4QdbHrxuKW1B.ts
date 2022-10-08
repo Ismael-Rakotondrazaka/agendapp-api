@@ -21,7 +21,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-08-13T21:01:20.251Z"),
         updatedAt: new Date("2022-09-28T02:19:17.787Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("6339113572db4facefd2be95"),
             title: "perferendis-suscipit",

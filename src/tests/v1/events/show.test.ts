@@ -5,7 +5,7 @@ import seedDB from "../utils/seeds/seedDB";
 import app from "../../../app";
 import jwt from "jsonwebtoken";
 
-describe("GET /api/v1/todos/:todoId", () => {
+describe("GET /api/v1/events/:eventId", () => {
   test.each([
     {
       _id: "6339b13e874a202526ee7dc7",
@@ -38,7 +38,7 @@ describe("GET /api/v1/todos/:todoId", () => {
       },
     },
     {
-      _id: "6339c453a99e445be44ad8b9", // future todo
+      _id: "6339c453a99e445be44ad8b9", // future event
       expected: {
         _id: "6339c453a99e445be44ad8b9",
         title: "corporis-odit-sunt",
@@ -63,7 +63,7 @@ describe("GET /api/v1/todos/:todoId", () => {
       },
     },
   ])(
-    "should return the todo with status 200 OK {testCase: l_JiVJx_FrNmaldIQX2in}",
+    "should return the event with status 200 OK {testCase: l_JiVJx_FrNmaldIQX2in}",
     async (testCase) => {
       await seedDB("l_JiVJx_FrNmaldIQX2in");
 
@@ -86,7 +86,7 @@ describe("GET /api/v1/todos/:todoId", () => {
       );
 
       return request(app)
-        .get(`/api/v1/todos/${testCase._id}`)
+        .get(`/api/v1/events/${testCase._id}`)
         .set("Authorization", `Bearer ${accessToken}`)
         .expect("Content-Type", /json/)
         .expect(200)
@@ -94,7 +94,7 @@ describe("GET /api/v1/todos/:todoId", () => {
           expect(response.body).toEqual(
             expect.objectContaining({
               data: expect.objectContaining({
-                todo: expect.objectContaining({
+                event: expect.objectContaining({
                   _id: expect.any(String),
                   title: expect.any(String),
                   description: expect.any(String),
@@ -114,16 +114,16 @@ describe("GET /api/v1/todos/:todoId", () => {
         .then((body) => {
           for (const key in testCase.expected) {
             if (Object.prototype.hasOwnProperty.call(testCase.expected, key)) {
-              expect(body.data.todo[key] as string).toBe(
+              expect(body.data.event[key] as string).toBe(
                 (testCase.expected as Record<string, string>)[key] as string
               );
             }
           }
 
-          const startAt: string = body.data.todo.startAt;
-          const endAt: string = body.data.todo.endAt;
-          const createdAt: string = body.data.todo.createdAt;
-          const updatedAt: string = body.data.todo.updatedAt;
+          const startAt: string = body.data.event.startAt;
+          const endAt: string = body.data.event.endAt;
+          const createdAt: string = body.data.event.createdAt;
+          const updatedAt: string = body.data.event.updatedAt;
 
           const startAtTime: number = new Date(startAt).getTime();
           const endAtTime: number = new Date(endAt).getTime();
@@ -147,8 +147,8 @@ describe("GET /api/v1/todos/:todoId", () => {
     "NotWorking!a",
     "fj_d:!dfc",
   ])(
-    "should return 404 Not Found if the todo doesn't exist or if the id is in bad format {testCase: b5htpxuXni97Kwk4CAb6x}",
-    async (todoId) => {
+    "should return 404 Not Found if the event doesn't exist or if the id is in bad format {testCase: b5htpxuXni97Kwk4CAb6x}",
+    async (eventId) => {
       await seedDB("b5htpxuXni97Kwk4CAb6x");
 
       const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || "";
@@ -168,7 +168,7 @@ describe("GET /api/v1/todos/:todoId", () => {
       );
 
       return request(app)
-        .get(`/api/v1/todos/${todoId}`)
+        .get(`/api/v1/events/${eventId}`)
         .set("Authorization", `Bearer ${accessToken}`)
         .expect("Content-Type", /json/)
         .expect(404)

@@ -6,7 +6,7 @@ import app from "../../../app";
 import jwt from "jsonwebtoken";
 import { faker } from "@faker-js/faker";
 
-describe("PUT /api/v1/todos/:todoId", () => {
+describe("PUT /api/v1/events/:eventId", () => {
   test.each([
     {
       field: "title",
@@ -34,11 +34,11 @@ describe("PUT /api/v1/todos/:todoId", () => {
       value: "2021-10-30T04:15:00.000Z",
     },
   ])(
-    "should return 400 Bad Request if the todo is in the past but not yesterday even if a correct change is made to $name {testCase: 1GWFnOmw--Ad6XtvZSHg2}",
+    "should return 400 Bad Request if the event is in the past but not yesterday even if a correct change is made to $name {testCase: 1GWFnOmw--Ad6XtvZSHg2}",
     async (change: { field: string; value: string }) => {
       await seedDB("1GWFnOmw--Ad6XtvZSHg2");
 
-      const originalTodoId = "63358cdf924b293800bcc8df";
+      const originalEventId = "63358cdf924b293800bcc8df";
 
       const data: Record<string, string> = {
         title: "molestias-consequuntur-excepturi",
@@ -68,7 +68,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
       });
 
       return request(app)
-        .put(`/api/v1/todos/${originalTodoId}`)
+        .put(`/api/v1/events/${originalEventId}`)
         .set("Authorization", `Bearer ${accessToken}`)
         .send(data)
         .expect("Content-Type", /json/)
@@ -114,11 +114,11 @@ describe("PUT /api/v1/todos/:todoId", () => {
       value: 1 * 60 * 60 * 1000,
     },
   ])(
-    "should return 200 OK if todo is in the future and a correct change is made to $field {testCase: w2DgY6X4H1f-NRYxt_U_A}",
+    "should return 200 OK if event is in the future and a correct change is made to $field {testCase: w2DgY6X4H1f-NRYxt_U_A}",
     async (change) => {
       await seedDB("w2DgY6X4H1f-NRYxt_U_A");
 
-      const originalTodoId = "6335965ffe8a0b7c4f64b656";
+      const originalEventId = "6335965ffe8a0b7c4f64b656";
 
       const originalStartAt = new Date(Date.now() + 48 * 60 * 60 * 1000); // after tomorrow
       originalStartAt.setHours(7, 0, 0, 0);
@@ -161,7 +161,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
       });
 
       return request(app)
-        .put(`/api/v1/todos/${originalTodoId}`)
+        .put(`/api/v1/events/${originalEventId}`)
         .set("Authorization", `Bearer ${accessToken}`)
         .send(data)
         .expect("Content-Type", /json/)
@@ -170,7 +170,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
           expect(response.body).toEqual(
             expect.objectContaining({
               data: expect.objectContaining({
-                todo: expect.objectContaining({
+                event: expect.objectContaining({
                   _id: expect.any(String),
                   title: expect.any(String),
                   description: expect.any(String),
@@ -187,28 +187,28 @@ describe("PUT /api/v1/todos/:todoId", () => {
           return response.body;
         })
         .then((body) => {
-          const updatedTodo = body.data.todo;
+          const updatedEvent = body.data.event;
 
-          expect(updatedTodo._id).toBe(originalTodoId);
-          expect(updatedTodo.title).toBe(data.title);
-          expect(updatedTodo.description).toBe(data.description);
-          expect(updatedTodo.status).toBe(data.status);
-          expect(updatedTodo.startAt).toBe(data.startAt);
-          expect(updatedTodo.endAt).toBe(data.endAt);
-          expect(updatedTodo.createdAt).toBe(originalCreatedAt);
-          expect(updatedTodo.updatedAt).not.toBe(originalUpdatedAt);
+          expect(updatedEvent._id).toBe(originalEventId);
+          expect(updatedEvent.title).toBe(data.title);
+          expect(updatedEvent.description).toBe(data.description);
+          expect(updatedEvent.status).toBe(data.status);
+          expect(updatedEvent.startAt).toBe(data.startAt);
+          expect(updatedEvent.endAt).toBe(data.endAt);
+          expect(updatedEvent.createdAt).toBe(originalCreatedAt);
+          expect(updatedEvent.updatedAt).not.toBe(originalUpdatedAt);
 
-          expect(new Date(updatedTodo.updatedAt).getTime()).not.toBeNaN();
+          expect(new Date(updatedEvent.updatedAt).getTime()).not.toBeNaN();
         });
     }
   );
 
   test.each(["title", "description", "level", "startAt", "endAt"])(
-    "should return 400 Bad Request if field %s is missing even if todo is in the future and a change is made {testCase: w2DgY6X4H1f-NRYxt_U_A}",
+    "should return 400 Bad Request if field %s is missing even if event is in the future and a change is made {testCase: w2DgY6X4H1f-NRYxt_U_A}",
     async (field: string) => {
       await seedDB("w2DgY6X4H1f-NRYxt_U_A");
 
-      const originalTodoId = "6335965ffe8a0b7c4f64b656";
+      const originalEventId = "6335965ffe8a0b7c4f64b656";
 
       const originalStartAt = new Date(Date.now() + 48 * 60 * 60 * 1000); // after tomorrow
       originalStartAt.setHours(4, 0, 0, 0);
@@ -247,7 +247,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
       });
 
       return request(app)
-        .put(`/api/v1/todos/${originalTodoId}`)
+        .put(`/api/v1/events/${originalEventId}`)
         .set("Authorization", `Bearer ${accessToken}`)
         .send(data)
         .expect("Content-Type", /json/)
@@ -271,11 +271,11 @@ describe("PUT /api/v1/todos/:todoId", () => {
   );
 
   test.each(["pending", "done", "failed"])(
-    "should return 400 Bad Request if trying to update status to %s even if the todo is in the future {testCase: tZXDs4dLX-9DOiRDAlJx4}",
+    "should return 400 Bad Request if trying to update status to %s even if the event is in the future {testCase: tZXDs4dLX-9DOiRDAlJx4}",
     async (statusValue) => {
       await seedDB("tZXDs4dLX-9DOiRDAlJx4");
 
-      const originalTodoId = "63359c214f499caf6fa5da79";
+      const originalEventId = "63359c214f499caf6fa5da79";
 
       const originalStartAt = new Date(Date.now() + 48 * 60 * 60 * 1000); // after tomorrow
       originalStartAt.setHours(4, 0, 0, 0);
@@ -307,7 +307,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
       });
 
       return request(app)
-        .put(`/api/v1/todos/${originalTodoId}`)
+        .put(`/api/v1/events/${originalEventId}`)
         .set("Authorization", `Bearer ${accessToken}`)
         .send(data)
         .expect("Content-Type", /json/)
@@ -348,7 +348,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
       endAt: 1 * 60 * 60 * 1000, // +1h
     },
   ])(
-    "should return 409 Conflict if interval is correct but it superpose another existing todo {testCase: 7n3wgh_LZxHsOS08M1cyF}",
+    "should return 409 Conflict if interval is correct but it superpose another existing event {testCase: 7n3wgh_LZxHsOS08M1cyF}",
     async (interval) => {
       await seedDB("7n3wgh_LZxHsOS08M1cyF");
 
@@ -376,7 +376,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
       );
 
       await request(app)
-        .post("/api/v1/todos")
+        .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .send({
           title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
@@ -392,7 +392,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
         .expect("Content-Type", /json/)
         .expect(201);
 
-      const todo = {
+      const event = {
         title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
         description:
           Math.floor(Math.random() * 10) % 2 === 0
@@ -405,9 +405,9 @@ describe("PUT /api/v1/todos/:todoId", () => {
       };
 
       await request(app)
-        .post("/api/v1/todos")
+        .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
-        .send(todo)
+        .send(event)
         .expect("Content-Type", /json/)
         .expect(409)
         .then((response) => {
@@ -445,7 +445,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
           firstName: "Itzel",
           lastName: "Farrell",
         },
-        todosId: [
+        eventsId: [
           "633985bf42f52701ad7081d8",
           "633985bf42f52701ad7081d9",
           "633985bf42f52701ad7081da",
@@ -460,7 +460,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
           firstName: "Daphney",
           lastName: "Emard",
         },
-        todosId: [
+        eventsId: [
           "633985bf42f52701ad7081db",
           "633985bf42f52701ad7081dc",
           "633985bf42f52701ad7081dd",
@@ -468,7 +468,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
       },
     },
   ])(
-    "should return 404 Not Found if todoId doesn't exist {testCase: $testCase}",
+    "should return 404 Not Found if eventId doesn't exist {testCase: $testCase}",
     async (testCase) => {
       await seedDB(testCase.testCase);
 
@@ -487,9 +487,9 @@ describe("PUT /api/v1/todos/:todoId", () => {
       );
 
       await Promise.all(
-        testCase.input.todosId.map(async (todoId) => {
+        testCase.input.eventsId.map(async (eventId) => {
           await request(app)
-            .put(`/api/v1/todos/${todoId}`)
+            .put(`/api/v1/events/${eventId}`)
             .set("Authorization", `Bearer ${accessToken}`)
             .expect("Content-Type", /json/)
             .expect(404)
@@ -522,8 +522,8 @@ describe("PUT /api/v1/todos/:todoId", () => {
   );
 
   test.each(["tenetur-nihilim", "jutstABadFormat:", "no!,tssr"])(
-    "should return 404 Not Found if todoId is bad format {testCase: yb8ybXLykSuOkNXRQosWk}",
-    async (todoId) => {
+    "should return 404 Not Found if eventId is bad format {testCase: yb8ybXLykSuOkNXRQosWk}",
+    async (eventId) => {
       await seedDB("yb8ybXLykSuOkNXRQosWk");
 
       // mimic accessToken
@@ -545,7 +545,7 @@ describe("PUT /api/v1/todos/:todoId", () => {
       );
 
       await request(app)
-        .put(`/api/v1/todos/${todoId}`)
+        .put(`/api/v1/events/${eventId}`)
         .set("Authorization", `Bearer ${accessToken}`)
         .expect("Content-Type", /json/)
         .expect(404)

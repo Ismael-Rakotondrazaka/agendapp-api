@@ -1,12 +1,12 @@
 import { Schema, model, Types } from "mongoose";
-import { IUser, IRefreshTokens, ITodo, TUserModel } from "../types";
+import { IUser, IRefreshTokens, IEvent, TUserModel } from "../types";
 
 const refreshTokenSchema = new Schema<Types.ObjectId & IRefreshTokens>({
   token: String,
   expiresAt: Date,
 });
 
-const todoSchema = new Schema<ITodo>(
+const eventSchema = new Schema<IEvent>(
   {
     title: {
       type: String,
@@ -66,7 +66,7 @@ const userSchema = new Schema<IUser, TUserModel>(
       required: true,
     },
     refreshTokens: [refreshTokenSchema],
-    todos: [todoSchema],
+    events: [eventSchema],
   },
   {
     timestamps: true,

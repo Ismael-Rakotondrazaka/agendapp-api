@@ -14,8 +14,8 @@ app.use(
 import authRoutes from "./routes/v1/auth/index";
 app.use("/api/v1/auth", authRoutes);
 
-import todoRoutes from "./routes/v1/todos/index";
-app.use("/api/v1/todos", todoRoutes);
+import eventRoutes from "./routes/v1/events/index";
+app.use("/api/v1/events", eventRoutes);
 
 import tokenRoutes from "./routes/v1/tokens/index";
 app.use("/api/v1/tokens", tokenRoutes);

@@ -22,7 +22,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2021-11-01T17:30:37.736Z"),
         updatedAt: new Date("2021-12-06T12:17:25.204Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("6339b13e874a202526ee7dc7"),
             title: "aut-et-qui-ratione",

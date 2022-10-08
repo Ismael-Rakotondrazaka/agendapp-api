@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { User } from "../../models";
 import { BadRequestError } from "../../utils/errors";
 import { Types } from "mongoose";
-import { ITodo } from "../../types";
+import { IEvent } from "../../types";
 import { ForbiddenError } from "../../utils/errors/index";
 
 interface ICustomRequest extends Request {
@@ -28,23 +28,23 @@ export default async function store(
       throw new BadRequestError();
     }
 
-    const { todoId } = req.params;
+    const { eventId } = req.params;
 
-    const targetTodo: (Types.Subdocument<Types.ObjectId> & ITodo) | null =
-      targetUser.todos.id(todoId);
+    const targetEvent: (Types.Subdocument<Types.ObjectId> & IEvent) | null =
+      targetUser.events.id(eventId);
 
-    if (!targetTodo) {
+    if (!targetEvent) {
       throw new BadRequestError();
     }
 
     const now = new Date();
 
-    // check if todo is in the past
-    if (targetTodo.endAt.getTime() <= now.getTime()) {
-      throw new ForbiddenError("Can't update past todos.");
+    // check if event is in the past
+    if (targetEvent.endAt.getTime() <= now.getTime()) {
+      throw new ForbiddenError("Can't update past events.");
     }
 
-    targetUser.todos.id(todoId)?.remove();
+    targetUser.events.id(eventId)?.remove();
     await targetUser.save();
 
     return res.sendStatus(204);

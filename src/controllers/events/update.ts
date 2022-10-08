@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { User } from "../../models";
 import { BadRequestError, ConflictError } from "../../utils/errors";
 import { createDataResponse } from "../../utils/responses";
-import { todoResource } from "../../resources";
+import { eventResource } from "../../resources";
 import {
   validateTitle,
   validateDescription,
@@ -10,9 +10,9 @@ import {
   validateStatus,
 } from "../../utils/strings";
 import { validateInterval } from "../../utils/dates";
-import { ITodo } from "../../types";
+import { IEvent } from "../../types";
 import { Types } from "mongoose";
-import todoConfig from "../../configs/todoConfig.json";
+import eventConfig from "../../configs/eventConfig.json";
 
 interface ICustomRequest extends Request {
   payload: {
@@ -37,12 +37,12 @@ export default async function update(
       throw new BadRequestError();
     }
 
-    const { todoId } = req.params;
+    const { eventId } = req.params;
 
-    const targetTodo: (Types.Subdocument<Types.ObjectId> & ITodo) | null =
-      targetUser.todos.id(todoId);
+    const targetEvent: (Types.Subdocument<Types.ObjectId> & IEvent) | null =
+      targetUser.events.id(eventId);
 
-    if (!targetTodo) {
+    if (!targetEvent) {
       throw new BadRequestError();
     }
 
@@ -79,7 +79,7 @@ export default async function update(
     // ! there is an delay between the request sent by the client side and now
     const now = new Date();
 
-    const todoUpdate: Record<string, string> = {
+    const eventUpdate: Record<string, string> = {
       title,
       description,
       status,
@@ -89,57 +89,57 @@ export default async function update(
     };
 
     /*
-      if update is possible, there are 2 possibilities: update past or future todo
+      if update is possible, there are 2 possibilities: update past or future event
     */
     let updateType: "past" | "future";
 
-    // check if the targetTodo is on the same day as now
+    // check if the targetEvent is on the same day as now
     if (
-      targetTodo.startAt.getFullYear() === now.getFullYear() &&
-      targetTodo.startAt.getMonth() === now.getMonth() &&
-      targetTodo.startAt.getDate() === now.getDate()
+      targetEvent.startAt.getFullYear() === now.getFullYear() &&
+      targetEvent.startAt.getMonth() === now.getMonth() &&
+      targetEvent.startAt.getDate() === now.getDate()
     ) {
-      // check if targetTodo.endAt is in the past
-      if (targetTodo.endAt.getTime() <= now.getTime()) {
+      // check if targetEvent.endAt is in the past
+      if (targetEvent.endAt.getTime() <= now.getTime()) {
         updateType = "past";
       } else {
-        // check if now is in the interval of the targetTodo
-        if (targetTodo.startAt.getTime() < now.getTime()) {
+        // check if now is in the interval of the targetEvent
+        if (targetEvent.startAt.getTime() < now.getTime()) {
           updateType = "past";
         }
-        // the targetTodo is in the future but on the same day as now
+        // the targetEvent is in the future but on the same day as now
         else {
           updateType = "future";
         }
       }
     }
-    // check if the targetTodo is in the past
-    else if (targetTodo.endAt.getTime() <= now.getTime()) {
-      // check if the targetTodo is ONE DAY before now (yesterday)
+    // check if the targetEvent is in the past
+    else if (targetEvent.endAt.getTime() <= now.getTime()) {
+      // check if the targetEvent is ONE DAY before now (yesterday)
       if (
-        targetTodo.startAt.getFullYear() === now.getFullYear() &&
-        targetTodo.startAt.getMonth() ===
+        targetEvent.startAt.getFullYear() === now.getFullYear() &&
+        targetEvent.startAt.getMonth() ===
           new Date(now.getTime() - 24 * 60 * 60 * 1000).getMonth() &&
-        targetTodo.startAt.getDate() ===
+        targetEvent.startAt.getDate() ===
           new Date(now.getTime() - 24 * 60 * 60 * 1000).getDate()
       ) {
         // check if now is on the Summary Period
         const summaryDate = new Date(now.getTime());
-        summaryDate.setHours(0, todoConfig.TODO_SUMMARY_PERIOD_MINUTES, 0, 0);
+        summaryDate.setHours(0, eventConfig.EVENT_SUMMARY_PERIOD_MINUTES, 0, 0);
         if (now.getTime() <= summaryDate.getTime()) {
           updateType = "past";
         } else {
           throw new BadRequestError(
-            "Can't update past todos unless it's on pervious day and the update is made in the Summary period."
+            "Can't update past events unless it's on pervious day and the update is made in the Summary period."
           );
         }
       } else {
         throw new BadRequestError(
-          "Can't update past todos unless it's on pervious day and the update is made in the Summary period."
+          "Can't update past events unless it's on pervious day and the update is made in the Summary period."
         );
       }
     }
-    // the targetTodo is in FUTURE DAYS
+    // the targetEvent is in FUTURE DAYS
     else {
       updateType = "future";
     }
@@ -158,11 +158,11 @@ export default async function update(
     // check if an update to fieldNoChange is made
     for (const field of fieldNoChange) {
       if (
-        todoUpdate[field] !==
-        (targetTodo as unknown as Record<string, string>)[field]
+        eventUpdate[field] !==
+        (targetEvent as unknown as Record<string, string>)[field]
       ) {
         throw new BadRequestError(
-          `Update to field ${field} is not allowed since the target todo is in the ${updateType}.`
+          `Update to field ${field} is not allowed since the target event is in the ${updateType}.`
         );
       }
     }
@@ -172,8 +172,8 @@ export default async function update(
     for (const field of fieldUpdatable) {
       // .toString() give make them works even if both are Dates
       if (
-        todoUpdate[field].toString() !==
-        (targetTodo as unknown as Record<string, string>)[field].toString()
+        eventUpdate[field].toString() !==
+        (targetEvent as unknown as Record<string, string>)[field].toString()
       ) {
         hasChange = true;
         break;
@@ -183,7 +183,7 @@ export default async function update(
       throw new BadRequestError("No update found.");
     }
 
-    const conflictTodo = await User.findOne({
+    const conflictEvent = await User.findOne({
       $or: [
         {
           $and: [
@@ -193,13 +193,13 @@ export default async function update(
               },
             },
             {
-              "todos.startAt": {
+              "events.startAt": {
                 $gte: startAt,
                 $lt: endAt,
               },
             },
             {
-              "todos.endAt": {
+              "events.endAt": {
                 $gt: endAt,
               },
             },
@@ -213,12 +213,12 @@ export default async function update(
               },
             },
             {
-              "todos.startAt": {
+              "events.startAt": {
                 $lt: startAt,
               },
             },
             {
-              "todos.endAt": {
+              "events.endAt": {
                 $gt: startAt,
                 $lte: endAt,
               },
@@ -233,12 +233,12 @@ export default async function update(
               },
             },
             {
-              "todos.startAt": {
+              "events.startAt": {
                 $gte: startAt,
               },
             },
             {
-              "todos.endAt": {
+              "events.endAt": {
                 $lte: endAt,
               },
             },
@@ -247,19 +247,19 @@ export default async function update(
       ],
     });
 
-    if (conflictTodo) {
+    if (conflictEvent) {
       throw new ConflictError(
         "One or many tasks are already existing on the interval given."
       );
     }
 
-    targetTodo.set(todoUpdate);
+    targetEvent.set(eventUpdate);
 
     await targetUser.save();
 
     return res.status(201).json(
       createDataResponse({
-        todo: todoResource(targetTodo),
+        event: eventResource(targetEvent),
       })
     );
   } catch (error) {

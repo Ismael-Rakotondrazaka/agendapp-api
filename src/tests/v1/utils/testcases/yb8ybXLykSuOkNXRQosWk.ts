@@ -15,7 +15,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-01-16T20:07:48.822Z"),
         updatedAt: new Date("2022-01-21T22:13:41.209Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("63398d2bf34247cac358864b"),
             title: "tenetur-nihil-veniam-temporibus",
