@@ -1,7 +1,7 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import { IUser, IRefreshTokens, ITodo, TUserModel } from "../types";
 
-const refreshTokenSchema = new Schema<IRefreshTokens>({
+const refreshTokenSchema = new Schema<Types.ObjectId & IRefreshTokens>({
   token: String,
   expiresAt: Date,
 });
