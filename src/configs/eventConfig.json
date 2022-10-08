@@ -1,0 +1,17 @@
+{
+    "EVENT_LEVELS": [
+        "normal",
+        "important"
+    ],
+    "EVENT_LEVEL_DEFAULT": "normal",
+    "EVENT_STATUS": [
+        "done",
+        "pending",
+        "failed"
+    ],
+    "EVENT_TITLE_MIN_LENGTH": 1,
+    "EVENT_TITLE_MAX_LENGTH": 50,
+    "EVENT_DESCRIPTION_MAX_LENGTH": 200,
+    "EVENT_INTERVAL_MINUTES": 15,
+    "EVENT_SUMMARY_PERIOD_MINUTES": 60
+}

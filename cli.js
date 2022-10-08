@@ -41,7 +41,7 @@ New testCase with name "${fileName}" created at "${fullPath}"
   }
 }
 
-function createTodo() {
+function createEvent() {
   try {
     let length;
     if ((args[1] === "") | (args[1] === undefined)) {
@@ -81,7 +81,7 @@ function createTodo() {
         startAt = endAt.getDate() - diff;
       }
 
-      const todo = {
+      const event = {
         _id: new ObjectId(),
         title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
         description:
@@ -97,14 +97,14 @@ function createTodo() {
       };
       console.log(
         `  {
-    "_id": "${todo._id}",
-    "title": "${todo.title}",
-    "description": "${todo.description}",
-    "status": "${todo.status}",
-    "level": "${todo.level}",
-    "startAt": "${todo.startAt.toISOString()}",
-    "endAt": "${todo.endAt.toISOString()}",
-    "createdAt": "${todo.createdAt.toISOString()}"
+    "_id": "${event._id}",
+    "title": "${event.title}",
+    "description": "${event.description}",
+    "status": "${event.status}",
+    "level": "${event.level}",
+    "startAt": "${event.startAt.toISOString()}",
+    "endAt": "${event.endAt.toISOString()}",
+    "createdAt": "${event.createdAt.toISOString()}"
   },`
       );
     }
@@ -167,7 +167,7 @@ function createUser() {
 
 const commandFunction = {
   "testCases:new": createTestCase,
-  "todos:new": createTodo,
+  "events:new": createEvent,
   "users:new": createUser,
 };
 
@@ -179,7 +179,7 @@ if (args.length > 0) {
   Commands available:
       testCases:new (path) -> Create a new testCase file with random name on the given path
                               Default path is "${defaultTestCasesPath}"
-      todos:new (length) -> Print a list of past todos, NOT future. Be aware, Interval CAN be superposed.
+      events:new (length) -> Print a list of past events, NOT future. Be aware, Interval CAN be superposed.
                             Default length is 1
       users:new (length) -> Print a list of users.
                             Default length is 1

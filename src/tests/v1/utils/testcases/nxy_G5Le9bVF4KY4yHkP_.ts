@@ -16,7 +16,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-08-29T23:47:23.344Z"),
         updatedAt: new Date("2022-09-02T21:29:13.102Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("633987426004f9a457bd03a4"),
             title: "dolore-ad-aliquid",

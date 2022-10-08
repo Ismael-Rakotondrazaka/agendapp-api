@@ -1,2 +1,2 @@
 export { default as userResource } from "./userResource";
-export { default as todoResource } from "./todoResource";
+export { default as eventResource } from "./eventResource";

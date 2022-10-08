@@ -16,7 +16,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-09-05T15:01:01.139Z"),
         updatedAt: new Date("2022-09-23T04:27:54.188Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("63398a4837dfa028f1519afd"),
             title: "est-esse-architecto-iure-autem",

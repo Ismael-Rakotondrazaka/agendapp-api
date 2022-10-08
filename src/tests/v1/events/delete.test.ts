@@ -5,7 +5,7 @@ import seedDB from "../utils/seeds/seedDB";
 import app from "../../../app";
 import jwt from "jsonwebtoken";
 
-describe("DELETE /api/v1/todos/:todoId", () => {
+describe("DELETE /api/v1/events/:eventId", () => {
   test.each([
     {
       testCase: "2ANkuhxt2gOPrN4hpSqau",
@@ -15,7 +15,7 @@ describe("DELETE /api/v1/todos/:todoId", () => {
           firstName: "Ephraim",
           lastName: "Jacobi",
         },
-        todoId: "6337e296e3611b1acb901abd",
+        eventId: "6337e296e3611b1acb901abd",
       },
       output: {
         expectedLength: 2,
@@ -29,14 +29,14 @@ describe("DELETE /api/v1/todos/:todoId", () => {
           firstName: "Julius",
           lastName: "Schiller",
         },
-        todoId: "63397f88074c0dc4737e6c3c",
+        eventId: "63397f88074c0dc4737e6c3c",
       },
       output: {
         expectedLength: 0,
       },
     },
   ])(
-    "should return 204 No Content for deleting future todos {testCase: $testCase}",
+    "should return 204 No Content for deleting future events {testCase: $testCase}",
     async (testCase) => {
       await seedDB(testCase.testCase);
 
@@ -54,26 +54,26 @@ describe("DELETE /api/v1/todos/:todoId", () => {
         }
       );
       await request(app)
-        .delete(`/api/v1/todos/${testCase.input.todoId}`)
+        .delete(`/api/v1/events/${testCase.input.eventId}`)
         .set("Authorization", `Bearer ${accessToken}`)
         .expect(204); // No Content
 
       await request(app)
-        .get("/api/v1/todos")
+        .get("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .expect(200)
         .then((response) => {
-          expect(response.body.data.todos.length).toBe(
+          expect(response.body.data.events.length).toBe(
             testCase.output.expectedLength
           );
         });
     }
   );
 
-  test("should return 403 Forbidden when deleting past todos {testCase: _amQYGPl3FZU0txY_Z6zm}", async () => {
+  test("should return 403 Forbidden when deleting past events {testCase: _amQYGPl3FZU0txY_Z6zm}", async () => {
     await seedDB("_amQYGPl3FZU0txY_Z6zm");
 
-    const todoIds: string[] = [
+    const eventIds: string[] = [
       "63390eb0f209f919baa94e2a",
       "63390eb0f209f919baa94e2b",
       "63390eb0f209f919baa94e2c",
@@ -98,9 +98,9 @@ describe("DELETE /api/v1/todos/:todoId", () => {
     );
 
     await Promise.all(
-      todoIds.map(async (todoId) => {
+      eventIds.map(async (eventId) => {
         await request(app)
-          .delete(`/api/v1/todos/${todoId}`)
+          .delete(`/api/v1/events/${eventId}`)
           .set("Authorization", `Bearer ${accessToken}`)
           .expect("Content-Type", /json/)
           .expect(403) // Forbidden
@@ -131,10 +131,10 @@ describe("DELETE /api/v1/todos/:todoId", () => {
     );
   });
 
-  test("should return 204 No Content for deleting a todos is passing now {testCase: bKkD-JV0x4QdbHrxuKW1B}", async () => {
+  test("should return 204 No Content for deleting a events is passing now {testCase: bKkD-JV0x4QdbHrxuKW1B}", async () => {
     await seedDB("bKkD-JV0x4QdbHrxuKW1B");
 
-    const todoId = "6339113572db4facefd2be95";
+    const eventId = "6339113572db4facefd2be95";
 
     // mimic accessToken
     const accessTokenSecret: string =
@@ -155,7 +155,7 @@ describe("DELETE /api/v1/todos/:todoId", () => {
     );
 
     await request(app)
-      .delete(`/api/v1/todos/${todoId}`)
+      .delete(`/api/v1/events/${eventId}`)
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(204); // No Content
   });
@@ -169,7 +169,7 @@ describe("DELETE /api/v1/todos/:todoId", () => {
           firstName: "Kiley",
           lastName: "Senger",
         },
-        todosId: [
+        eventsId: [
           "63398b6d9e3607e181a718fc",
           "63398b6d9e3607e181a718fd",
           "63398b6d9e3607e181a718fe",
@@ -184,7 +184,7 @@ describe("DELETE /api/v1/todos/:todoId", () => {
           firstName: "Deja",
           lastName: "Skiles",
         },
-        todosId: [
+        eventsId: [
           "63398b93953a9e2498d073c8",
           "63398b93953a9e2498d073c9",
           "63398b93953a9e2498d073ca",
@@ -192,7 +192,7 @@ describe("DELETE /api/v1/todos/:todoId", () => {
       },
     },
   ])(
-    "should return 404 Not Found if todoId doesn't exist {testCase: $testCase}",
+    "should return 404 Not Found if eventId doesn't exist {testCase: $testCase}",
     async (testCase) => {
       await seedDB(testCase.testCase);
 
@@ -211,9 +211,9 @@ describe("DELETE /api/v1/todos/:todoId", () => {
       );
 
       await Promise.all(
-        testCase.input.todosId.map(async (todoId) => {
+        testCase.input.eventsId.map(async (eventId) => {
           await request(app)
-            .delete(`/api/v1/todos/${todoId}`)
+            .delete(`/api/v1/events/${eventId}`)
             .set("Authorization", `Bearer ${accessToken}`)
             .expect("Content-Type", /json/)
             .expect(404)
@@ -246,8 +246,8 @@ describe("DELETE /api/v1/todos/:todoId", () => {
   );
 
   test.each(["sed-ullam", "{540fdf56dfa543cb6}", "!f#dfs"])(
-    "should return 404 Not Found if todoId is bad format {testCase: _iN258fQ4pawAJsURy_W5}",
-    async (todoId) => {
+    "should return 404 Not Found if eventId is bad format {testCase: _iN258fQ4pawAJsURy_W5}",
+    async (eventId) => {
       await seedDB("_iN258fQ4pawAJsURy_W5");
 
       // mimic accessToken
@@ -269,7 +269,7 @@ describe("DELETE /api/v1/todos/:todoId", () => {
       );
 
       await request(app)
-        .delete(`/api/v1/todos/${todoId}`)
+        .delete(`/api/v1/events/${eventId}`)
         .set("Authorization", `Bearer ${accessToken}`)
         .expect("Content-Type", /json/)
         .expect(404)

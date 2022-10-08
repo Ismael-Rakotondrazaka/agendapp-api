@@ -14,7 +14,7 @@ const seed: TSeed[] = [
           "$2b$10$u2RhK8i4iwU0tvrWC4/5I.AICRzF0z8j4OumkouXxDapViDUdCZW2",
         createdAt: new Date("2022-03-11T14:10:10.517Z"),
         updatedAt: new Date("2022-04-14T13:17:09.295Z"),
-        todos: [
+        events: [
           {
             _id: "6332983dd0a7c6606e36a275",
             title: "illum",

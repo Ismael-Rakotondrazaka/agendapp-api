@@ -1,8 +1,8 @@
-import dotenv from "dotenv";
-dotenv.config();
 import { Response, Request, NextFunction } from "express";
 import { User } from "../../models";
-import { NotFoundError } from "../../utils/errors";
+import { BadRequestError } from "../../utils/errors";
+import { createDataResponse } from "../../utils/responses";
+import { eventResource } from "../../resources";
 
 interface ICustomRequest extends Request {
   payload: {
@@ -12,33 +12,28 @@ interface ICustomRequest extends Request {
   };
 }
 
-export default async function todoMiddleware(
+export default async function index(
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<Response | void> {
   try {
-    const { todoId } = req.params;
-
-    if (!/^[a-f0-9]+$/.test(todoId)) {
-      throw new NotFoundError();
-    }
-
     const targetUserId: string = (req as ICustomRequest).payload.user._id;
     const targetUser = await User.findOne({
       _id: targetUserId,
-    }).select({
-      _id: 1,
-      todos: 1,
-    });
+    }).select({ refreshTokens: 0 });
 
-    const targetTodo = targetUser?.todos.id(todoId);
-
-    if (!targetTodo) {
-      throw new NotFoundError();
+    if (!targetUser) {
+      throw new BadRequestError();
     }
 
-    next();
+    const events = targetUser.events.map((event) => eventResource(event));
+
+    return res.json(
+      createDataResponse({
+        events,
+      })
+    );
   } catch (error) {
     next(error);
   }

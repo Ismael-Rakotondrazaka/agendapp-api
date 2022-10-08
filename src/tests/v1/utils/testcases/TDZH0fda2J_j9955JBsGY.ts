@@ -15,7 +15,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-01-23T14:11:20.038Z"),
         updatedAt: new Date("2022-01-28T17:17:43.231Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("6332b0ddc1320a76d98b71b7"),
             title: "molestiae-quis-perspiciatis-repudiandae",

@@ -15,7 +15,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-03-17T16:51:09.687Z"),
         updatedAt: new Date("2022-03-23T21:32:51.826Z"),
         refreshTokens: [],
-        todos: [],
+        events: [],
       },
     ],
   },

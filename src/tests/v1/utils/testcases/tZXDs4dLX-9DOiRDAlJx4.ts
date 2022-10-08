@@ -20,7 +20,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-03-20T22:06:35.266Z"),
         updatedAt: new Date("2022-03-24T22:25:29.735Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("63359c214f499caf6fa5da79"),
             title: "repellat",

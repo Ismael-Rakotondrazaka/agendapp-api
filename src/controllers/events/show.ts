@@ -2,9 +2,9 @@ import { Response, Request, NextFunction } from "express";
 import { User } from "../../models";
 import { BadRequestError } from "../../utils/errors";
 import { createDataResponse } from "../../utils/responses";
-import { todoResource } from "../../resources";
+import { eventResource } from "../../resources";
 import { Types } from "mongoose";
-import { ITodo } from "../../types";
+import { IEvent } from "../../types";
 
 interface ICustomRequest extends Request {
   payload: {
@@ -29,18 +29,18 @@ export default async function index(
       throw new BadRequestError();
     }
 
-    const { todoId } = req.params;
+    const { eventId } = req.params;
 
-    const targetTodo: (Types.Subdocument<Types.ObjectId> & ITodo) | null =
-      targetUser.todos.id(todoId);
+    const targetEvent: (Types.Subdocument<Types.ObjectId> & IEvent) | null =
+      targetUser.events.id(eventId);
 
-    if (!targetTodo) {
+    if (!targetEvent) {
       throw new BadRequestError();
     }
 
     return res.json(
       createDataResponse({
-        todo: todoResource(targetTodo),
+        event: eventResource(targetEvent),
       })
     );
   } catch (error) {

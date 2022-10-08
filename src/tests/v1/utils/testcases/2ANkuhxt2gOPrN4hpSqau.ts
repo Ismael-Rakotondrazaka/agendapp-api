@@ -16,7 +16,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-02-06T02:42:32.946Z"),
         updatedAt: new Date("2022-02-15T23:58:58.285Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("6337e296e3611b1acb901abc"),
             title: "mollitia-at",

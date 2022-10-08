@@ -1,11 +1,11 @@
 import { HydratedDocument, Types } from "mongoose";
-import { ITodo, TTodoResource } from "../types/index";
+import { IEvent, TEventResource } from "../types/index";
 
-export default function todoResource(
-  resource: HydratedDocument<unknown, any, ITodo> &
+export default function eventResource(
+  resource: HydratedDocument<unknown, any, IEvent> &
     Types.Subdocument<Types.ObjectId> &
-    ITodo
-): TTodoResource {
+    IEvent
+): TEventResource {
   return {
     _id: resource.id,
     title: resource.title,

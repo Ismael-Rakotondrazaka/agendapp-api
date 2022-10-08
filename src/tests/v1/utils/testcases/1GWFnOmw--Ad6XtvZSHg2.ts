@@ -15,7 +15,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2021-11-28T11:13:06.387Z"),
         updatedAt: new Date("2022-01-28T11:40:41.604Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("63358cdf924b293800bcc8df"),
             title: "molestias-consequuntur-excepturi",

@@ -6,7 +6,7 @@ import app from "../../../app";
 import { faker } from "@faker-js/faker";
 import jwt from "jsonwebtoken";
 
-describe("GET /api/v1/todos", () => {
+describe("GET /api/v1/events", () => {
   test.each([
     {
       testCase: "Kw_UIqtaNJ8Gv-5_LoiiI",
@@ -18,7 +18,7 @@ describe("GET /api/v1/todos", () => {
         },
       },
       output: {
-        todos: {
+        events: {
           length: 3,
           value: [
             {
@@ -68,7 +68,7 @@ describe("GET /api/v1/todos", () => {
         },
       },
       output: {
-        todos: {
+        events: {
           length: 21,
           value: [
             {
@@ -329,14 +329,14 @@ describe("GET /api/v1/todos", () => {
         },
       },
       output: {
-        todos: {
+        events: {
           length: 0,
           value: [],
         },
       },
     },
   ])(
-    "should return todos with length $output.todos.length {testCase: $testCase}",
+    "should return events with length $output.events.length {testCase: $testCase}",
     async (test) => {
       await seedDB(test.testCase || undefined);
 
@@ -356,14 +356,14 @@ describe("GET /api/v1/todos", () => {
       );
 
       return request(app)
-        .get("/api/v1/todos")
+        .get("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .expect("Content-Type", /json/)
         .expect(200)
         .then((response) => {
           expect(response.body.data).not.toBeFalsy();
-          expect(response.body.data.todos).toStrictEqual(
-            test.output.todos.value
+          expect(response.body.data.events).toStrictEqual(
+            test.output.events.value
           );
         });
     }
@@ -378,7 +378,7 @@ describe("GET /api/v1/todos", () => {
           firstName: "Emmanuelle",
           lastName: "Borer",
         },
-        todos: {
+        events: {
           length: 1,
           values: [
             {
@@ -392,7 +392,7 @@ describe("GET /api/v1/todos", () => {
       },
       output: {
         before: {
-          todos: {
+          events: {
             length: 3,
             value: [
               {
@@ -444,7 +444,7 @@ describe("GET /api/v1/todos", () => {
           firstName: "Fiona",
           lastName: "Wintheiser",
         },
-        todos: {
+        events: {
           length: 2,
           values: [
             {
@@ -463,7 +463,7 @@ describe("GET /api/v1/todos", () => {
       },
       output: {
         before: {
-          todos: {
+          events: {
             length: 1,
             value: [
               {
@@ -484,7 +484,7 @@ describe("GET /api/v1/todos", () => {
       },
     },
   ])(
-    "should return todos with length $input.todos.length + $output.before.todos.length after storing $input.todos.length todos",
+    "should return events with length $input.events.length + $output.before.events.length after storing $input.events.length events",
     async (test) => {
       await seedDB(test.testCase || undefined);
 
@@ -501,7 +501,7 @@ describe("GET /api/v1/todos", () => {
         return result;
       };
 
-      const after = test.output.before.todos.value;
+      const after = test.output.before.events.value;
 
       const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || "";
       const accessTokenLife = 15; // mn
@@ -513,10 +513,10 @@ describe("GET /api/v1/todos", () => {
         }
       );
 
-      let lastTodo = new Date();
+      let lastEvent = new Date();
       await Promise.all(
-        test.input.todos.values.map(async (todoInput) => {
-          let startAt = faker.date.future(1, lastTodo);
+        test.input.events.values.map(async (eventInput) => {
+          let startAt = faker.date.future(1, lastEvent);
           startAt = roundDate(startAt);
           startAt.setHours(0); // to get more hours until the end of the day
           const intervalMn: number =
@@ -529,16 +529,16 @@ describe("GET /api/v1/todos", () => {
             endAt.setTime(endAt.getTime() + intervalMs);
           }
 
-          lastTodo = endAt;
+          lastEvent = endAt;
 
           const data = {
-            ...todoInput,
+            ...eventInput,
             startAt,
             endAt,
           };
 
           await request(app)
-            .post("/api/v1/todos")
+            .post("/api/v1/events")
             .set("Authorization", `Bearer ${accessToken}`)
             .send(data)
             .expect("Content-Type", /json/)
@@ -547,7 +547,7 @@ describe("GET /api/v1/todos", () => {
               expect(response.body).toEqual(
                 expect.objectContaining({
                   data: expect.objectContaining({
-                    todo: expect.objectContaining({
+                    event: expect.objectContaining({
                       _id: expect.any(String),
                       title: expect.any(String),
                       description: expect.any(String),
@@ -565,16 +565,16 @@ describe("GET /api/v1/todos", () => {
               return response.body;
             })
             .then((body) => {
-              const todo = body.data.todo;
-              expect(todo.title).toBe(todoInput.title);
-              expect(todo.description).toBe(todoInput.description);
-              expect(todo.level).toBe(todoInput.level);
-              expect(todo.status).toBe("pending");
+              const event = body.data.event;
+              expect(event.title).toBe(eventInput.title);
+              expect(event.description).toBe(eventInput.description);
+              expect(event.level).toBe(eventInput.level);
+              expect(event.status).toBe("pending");
 
-              const startAt = body.data.todo.startAt;
-              const endAt = body.data.todo.endAt;
-              const createdAt = body.data.todo.createdAt;
-              const updatedAt = body.data.todo.updatedAt;
+              const startAt = body.data.event.startAt;
+              const endAt = body.data.event.endAt;
+              const createdAt = body.data.event.createdAt;
+              const updatedAt = body.data.event.updatedAt;
 
               const startAtTime = new Date(startAt).getTime();
               const endAtTime = new Date(endAt).getTime();
@@ -586,16 +586,16 @@ describe("GET /api/v1/todos", () => {
               expect(createdAtTime).not.toBeNaN();
               expect(updatedAtTime).not.toBeNaN();
 
-              return todo;
+              return event;
             })
-            .then((todo) => {
-              after.push(todo);
+            .then((event) => {
+              after.push(event);
             });
         })
       );
 
       return request(app)
-        .get("/api/v1/todos")
+        .get("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .expect(200)
         .expect("Content-Type", /json/)
@@ -603,7 +603,7 @@ describe("GET /api/v1/todos", () => {
           expect(response.body).toEqual(
             expect.objectContaining({
               data: expect.objectContaining({
-                todos: after,
+                events: after,
               }),
             })
           );

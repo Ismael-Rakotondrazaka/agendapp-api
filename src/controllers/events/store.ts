@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { User } from "../../models";
 import { BadRequestError, ConflictError } from "../../utils/errors";
 import { createDataResponse } from "../../utils/responses";
-import { todoResource } from "../../resources";
+import { eventResource } from "../../resources";
 import { validateInterval } from "../../utils/dates";
 import {
   validateTitle,
@@ -102,21 +102,21 @@ export default async function store(
     endAt = interval.end;
     level = validateLevel(level);
 
-    // check if no todo exist in the interval
+    // check if no event exist in the interval
     // there are 3 possibilities
-    const conflictTodo = await User.findOne({
+    const conflictEvent = await User.findOne({
       $or: [
         {
           $and: [
             { _id: targetUser._id },
             {
-              "todos.startAt": {
+              "events.startAt": {
                 $gte: startAt,
                 $lt: endAt,
               },
             },
             {
-              "todos.endAt": {
+              "events.endAt": {
                 $gt: endAt,
               },
             },
@@ -126,12 +126,12 @@ export default async function store(
           $and: [
             { _id: targetUser._id },
             {
-              "todos.startAt": {
+              "events.startAt": {
                 $lt: startAt,
               },
             },
             {
-              "todos.endAt": {
+              "events.endAt": {
                 $gt: startAt,
                 $lte: endAt,
               },
@@ -142,12 +142,12 @@ export default async function store(
           $and: [
             { _id: targetUser._id },
             {
-              "todos.startAt": {
+              "events.startAt": {
                 $gte: startAt,
               },
             },
             {
-              "todos.endAt": {
+              "events.endAt": {
                 $lte: endAt,
               },
             },
@@ -156,11 +156,11 @@ export default async function store(
       ],
     });
 
-    if (conflictTodo) {
+    if (conflictEvent) {
       throw new ConflictError();
     }
 
-    const targetTodo = targetUser.todos.create({
+    const targetEvent = targetUser.events.create({
       title,
       description,
       startAt,
@@ -168,12 +168,12 @@ export default async function store(
       level,
     });
 
-    targetUser.todos.push(targetTodo);
+    targetUser.events.push(targetEvent);
     await targetUser.save();
 
     return res.status(201).json(
       createDataResponse({
-        todo: todoResource(targetTodo),
+        event: eventResource(targetEvent),
       })
     );
   } catch (error) {

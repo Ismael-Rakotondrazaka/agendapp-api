@@ -16,7 +16,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-05-29T21:26:52.725Z"),
         updatedAt: new Date("2022-08-25T08:11:13.326Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("633986c1e2ca9973593672a8"),
             title: "consequatur-reiciendis-quis-ipsa-ratione",

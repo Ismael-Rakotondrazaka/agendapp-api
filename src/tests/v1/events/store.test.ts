@@ -6,8 +6,8 @@ import app from "../../../app";
 import { faker } from "@faker-js/faker";
 import jwt from "jsonwebtoken";
 
-describe("POST /api/v1/todos", () => {
-  test("should return the todo data with interval of 15mn, and level normal {testCase: rneXqQz2xP3lxvV6sVgsa}", async () => {
+describe("POST /api/v1/events", () => {
+  test("should return the event data with interval of 15mn, and level normal {testCase: rneXqQz2xP3lxvV6sVgsa}", async () => {
     await seedDB("rneXqQz2xP3lxvV6sVgsa");
 
     const _id = "632e204e47122dbbc89a9ae2";
@@ -46,7 +46,7 @@ describe("POST /api/v1/todos", () => {
     };
 
     return request(app)
-      .post("/api/v1/todos")
+      .post("/api/v1/events")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(data)
       .expect("Content-Type", /json/)
@@ -55,7 +55,7 @@ describe("POST /api/v1/todos", () => {
         expect(response.body).toEqual(
           expect.objectContaining({
             data: expect.objectContaining({
-              todo: expect.objectContaining({
+              event: expect.objectContaining({
                 _id: expect.any(String),
                 title: expect.any(String),
                 description: expect.any(String),
@@ -73,10 +73,10 @@ describe("POST /api/v1/todos", () => {
         return response.body;
       })
       .then((body) => {
-        const startAt = body.data.todo.startAt;
-        const endAt = body.data.todo.endAt;
-        const createdAt = body.data.todo.createdAt;
-        const updatedAt = body.data.todo.updatedAt;
+        const startAt = body.data.event.startAt;
+        const endAt = body.data.event.endAt;
+        const createdAt = body.data.event.createdAt;
+        const updatedAt = body.data.event.updatedAt;
 
         const startAtTime = new Date(startAt).getTime();
         const endAtTime = new Date(endAt).getTime();
@@ -91,14 +91,14 @@ describe("POST /api/v1/todos", () => {
         expect(endAtTime).toBeGreaterThan(startAtTime);
         expect(startAtTime).toBeGreaterThanOrEqual(createdAtTime);
 
-        const status = body.data.todo.status;
+        const status = body.data.event.status;
         expect(status).toBe("pending");
-        const level = body.data.todo.level;
+        const level = body.data.event.level;
         expect(level).toBe("normal");
       });
   });
 
-  test("should return the todo data with interval of 15mn, and level important {testCase: rneXqQz2xP3lxvV6sVgsa}", async () => {
+  test("should return the event data with interval of 15mn, and level important {testCase: rneXqQz2xP3lxvV6sVgsa}", async () => {
     await seedDB("rneXqQz2xP3lxvV6sVgsa");
 
     const _id = "632e204e47122dbbc89a9ae2";
@@ -137,7 +137,7 @@ describe("POST /api/v1/todos", () => {
     };
 
     return request(app)
-      .post("/api/v1/todos")
+      .post("/api/v1/events")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(data)
       .expect("Content-Type", /json/)
@@ -146,7 +146,7 @@ describe("POST /api/v1/todos", () => {
         expect(response.body).toEqual(
           expect.objectContaining({
             data: expect.objectContaining({
-              todo: expect.objectContaining({
+              event: expect.objectContaining({
                 _id: expect.any(String),
                 title: expect.any(String),
                 description: expect.any(String),
@@ -164,10 +164,10 @@ describe("POST /api/v1/todos", () => {
         return response.body;
       })
       .then((body) => {
-        const startAt = body.data.todo.startAt;
-        const endAt = body.data.todo.endAt;
-        const createdAt = body.data.todo.createdAt;
-        const updatedAt = body.data.todo.updatedAt;
+        const startAt = body.data.event.startAt;
+        const endAt = body.data.event.endAt;
+        const createdAt = body.data.event.createdAt;
+        const updatedAt = body.data.event.updatedAt;
 
         const startAtTime = new Date(startAt).getTime();
         const endAtTime = new Date(endAt).getTime();
@@ -182,14 +182,14 @@ describe("POST /api/v1/todos", () => {
         expect(endAtTime).toBeGreaterThan(startAtTime);
         expect(startAtTime).toBeGreaterThanOrEqual(createdAtTime);
 
-        const status = body.data.todo.status;
+        const status = body.data.event.status;
         expect(status).toBe("pending");
-        const level = body.data.todo.level;
+        const level = body.data.event.level;
         expect(level).toBe("important");
       });
   });
 
-  test("should return the todo data with interval of 1h and 45mn {testCase: VX4Yxq1WIDhCT5Q6EQoiX}", async () => {
+  test("should return the event data with interval of 1h and 45mn {testCase: VX4Yxq1WIDhCT5Q6EQoiX}", async () => {
     await seedDB("VX4Yxq1WIDhCT5Q6EQoiX");
 
     const _id = "632e204e47122dbbc89a9ae2";
@@ -228,7 +228,7 @@ describe("POST /api/v1/todos", () => {
     };
 
     return request(app)
-      .post("/api/v1/todos")
+      .post("/api/v1/events")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(data)
       .expect("Content-Type", /json/)
@@ -237,7 +237,7 @@ describe("POST /api/v1/todos", () => {
         expect(response.body).toEqual(
           expect.objectContaining({
             data: expect.objectContaining({
-              todo: expect.objectContaining({
+              event: expect.objectContaining({
                 _id: expect.any(String),
                 title: expect.any(String),
                 description: expect.any(String),
@@ -254,10 +254,10 @@ describe("POST /api/v1/todos", () => {
         return response.body;
       })
       .then((body) => {
-        const startAt = body.data.todo.startAt;
-        const endAt = body.data.todo.endAt;
-        const createdAt = body.data.todo.createdAt;
-        const updatedAt = body.data.todo.updatedAt;
+        const startAt = body.data.event.startAt;
+        const endAt = body.data.event.endAt;
+        const createdAt = body.data.event.createdAt;
+        const updatedAt = body.data.event.updatedAt;
 
         const startAtTime = new Date(startAt).getTime();
         const endAtTime = new Date(endAt).getTime();
@@ -272,7 +272,7 @@ describe("POST /api/v1/todos", () => {
         expect(endAtTime).toBeGreaterThan(startAtTime);
         expect(startAtTime).toBeGreaterThanOrEqual(createdAtTime);
 
-        const status = body.data.todo.status;
+        const status = body.data.event.status;
         expect(status).toBe("pending");
       });
   });
@@ -315,7 +315,7 @@ describe("POST /api/v1/todos", () => {
     };
 
     return request(app)
-      .post("/api/v1/todos")
+      .post("/api/v1/events")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(data)
       .expect("Content-Type", /json/)
@@ -375,7 +375,7 @@ describe("POST /api/v1/todos", () => {
     };
 
     return request(app)
-      .post("/api/v1/todos")
+      .post("/api/v1/events")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(data)
       .expect("Content-Type", /json/)
@@ -485,7 +485,7 @@ describe("POST /api/v1/todos", () => {
       delete data[field.name];
 
       return request(app)
-        .post("/api/v1/todos")
+        .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .send(data)
         .expect("Content-Type", /json/)
@@ -564,7 +564,7 @@ describe("POST /api/v1/todos", () => {
       delete data[field.name];
 
       return request(app)
-        .post("/api/v1/todos")
+        .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .send(data)
         .expect("Content-Type", /json/)
@@ -573,7 +573,7 @@ describe("POST /api/v1/todos", () => {
           expect(response.body).toEqual(
             expect.objectContaining({
               data: expect.objectContaining({
-                todo: expect.objectContaining({
+                event: expect.objectContaining({
                   _id: expect.any(String),
                   title: expect.any(String),
                   description: expect.any(String),
@@ -591,10 +591,10 @@ describe("POST /api/v1/todos", () => {
           return response.body;
         })
         .then((body) => {
-          const startAt = body.data.todo.startAt;
-          const endAt = body.data.todo.endAt;
-          const createdAt = body.data.todo.createdAt;
-          const updatedAt = body.data.todo.updatedAt;
+          const startAt = body.data.event.startAt;
+          const endAt = body.data.event.endAt;
+          const createdAt = body.data.event.createdAt;
+          const updatedAt = body.data.event.updatedAt;
 
           const startAtTime = new Date(startAt).getTime();
           const endAtTime = new Date(endAt).getTime();
@@ -609,9 +609,9 @@ describe("POST /api/v1/todos", () => {
           expect(endAtTime).toBeGreaterThan(startAtTime);
           expect(startAtTime).toBeGreaterThanOrEqual(createdAtTime);
 
-          const status = body.data.todo.status;
+          const status = body.data.event.status;
           expect(status).toBe("pending");
-          const level = body.data.todo.level;
+          const level = body.data.event.level;
           expect(level).toBe("normal");
         });
     }
@@ -655,7 +655,7 @@ describe("POST /api/v1/todos", () => {
     };
 
     return request(app)
-      .post("/api/v1/todos")
+      .post("/api/v1/events")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(data)
       .expect("Content-Type", /json/)
@@ -723,7 +723,7 @@ describe("POST /api/v1/todos", () => {
     };
 
     return request(app)
-      .post("/api/v1/todos")
+      .post("/api/v1/events")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(data)
       .expect("Content-Type", /json/)
@@ -792,7 +792,7 @@ describe("POST /api/v1/todos", () => {
     };
 
     return request(app)
-      .post("/api/v1/todos")
+      .post("/api/v1/events")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(data)
       .expect("Content-Type", /json/)
@@ -846,7 +846,7 @@ describe("POST /api/v1/todos", () => {
       endAt: 1 * 60 * 60 * 1000, // +1h
     },
   ])(
-    "should return 409 Conflict if interval is correct but it superpose another existing todo {testCase: UIEDmiNq17C4-RHLoA4eE}",
+    "should return 409 Conflict if interval is correct but it superpose another existing event {testCase: UIEDmiNq17C4-RHLoA4eE}",
     async (interval) => {
       await seedDB("UIEDmiNq17C4-RHLoA4eE");
 
@@ -875,7 +875,7 @@ describe("POST /api/v1/todos", () => {
       );
 
       await request(app)
-        .post("/api/v1/todos")
+        .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .send({
           title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
@@ -891,7 +891,7 @@ describe("POST /api/v1/todos", () => {
         .expect("Content-Type", /json/)
         .expect(201);
 
-      const todo = {
+      const event = {
         title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
         description:
           Math.floor(Math.random() * 10) % 2 === 0
@@ -904,9 +904,9 @@ describe("POST /api/v1/todos", () => {
       };
 
       await request(app)
-        .post("/api/v1/todos")
+        .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
-        .send(todo)
+        .send(event)
         .expect("Content-Type", /json/)
         .expect(409)
         .then((response) => {
@@ -964,7 +964,7 @@ describe("POST /api/v1/todos", () => {
       );
 
       await request(app)
-        .post("/api/v1/todos")
+        .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .send({
           title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
@@ -991,7 +991,7 @@ describe("POST /api/v1/todos", () => {
           : startAt;
 
       await request(app)
-        .post("/api/v1/todos")
+        .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .send({
           title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
@@ -1054,7 +1054,7 @@ describe("POST /api/v1/todos", () => {
       data["endAt"] = endAt.toISOString();
 
       await request(app)
-        .post("/api/v1/todos")
+        .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .send({
           title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
@@ -1077,7 +1077,7 @@ describe("POST /api/v1/todos", () => {
       endAt.setMinutes(interval, 0, 0);
 
       await request(app)
-        .post("/api/v1/todos")
+        .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
         .send({
           title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),

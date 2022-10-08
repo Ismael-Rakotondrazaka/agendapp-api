@@ -20,7 +20,7 @@ const seed: TSeed[] = [
         createdAt: new Date("2022-04-29T19:17:31.313Z"),
         updatedAt: new Date("2022-06-02T15:06:22.508Z"),
         refreshTokens: [],
-        todos: [
+        events: [
           {
             _id: new ObjectId("6335965ffe8a0b7c4f64b656"),
             title: "quaerat-odit-ut",

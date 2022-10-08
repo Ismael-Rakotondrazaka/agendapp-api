@@ -1,6 +1,6 @@
 import { BadRequestError } from "../errors";
 import validator from "validator";
-import todoConfig from "../../configs/todoConfig.json";
+import eventConfig from "../../configs/eventConfig.json";
 
 export default function validateDescription(description: string): string {
   description = description.trim();
@@ -10,11 +10,11 @@ export default function validateDescription(description: string): string {
 
   if (
     !validator.isLength(description, {
-      max: todoConfig.TODO_DESCRIPTION_MAX_LENGTH,
+      max: eventConfig.EVENT_DESCRIPTION_MAX_LENGTH,
     })
   ) {
     throw new BadRequestError(
-      `${todoConfig.TODO_DESCRIPTION_MAX_LENGTH} is the maximum allowed for (todos') description.`
+      `${eventConfig.EVENT_DESCRIPTION_MAX_LENGTH} is the maximum allowed for (events') description.`
     );
   }
 

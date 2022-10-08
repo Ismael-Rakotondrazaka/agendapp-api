@@ -1,4 +1,4 @@
-import todoConfig from "../../configs/todoConfig.json";
+import eventConfig from "../../configs/eventConfig.json";
 import roundDateTo from "./roundDateTo";
 import { BadRequestError } from "../errors";
 
@@ -9,15 +9,15 @@ export default function validateInterval(
   start: Date;
   end: Date;
 } {
-  const startDate = roundDateTo(start, todoConfig.TODO_INTERVAL_MINUTES);
-  const endDate = roundDateTo(end, todoConfig.TODO_INTERVAL_MINUTES);
+  const startDate = roundDateTo(start, eventConfig.EVENT_INTERVAL_MINUTES);
+  const endDate = roundDateTo(end, eventConfig.EVENT_INTERVAL_MINUTES);
 
   const diff = endDate.getTime() - startDate.getTime(); // ms
-  const intervalToReferMs = todoConfig.TODO_INTERVAL_MINUTES * 60 * 1000;
+  const intervalToReferMs = eventConfig.EVENT_INTERVAL_MINUTES * 60 * 1000;
   // check if interval is less than default minimum interval
   if (diff < intervalToReferMs) {
     throw new BadRequestError(
-      `Invalid interval. ${todoConfig.TODO_INTERVAL_MINUTES}mn is the minimum interval allowed between startAt and endAt.`
+      `Invalid interval. ${eventConfig.EVENT_INTERVAL_MINUTES}mn is the minimum interval allowed between startAt and endAt.`
     );
   }
 

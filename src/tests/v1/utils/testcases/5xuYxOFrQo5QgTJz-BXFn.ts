@@ -21,7 +21,7 @@ const seed: TSeed[] = [
         createdAt: faker.date.recent(),
         updatedAt: faker.date.recent(),
         refreshTokens: [],
-        todos: [],
+        events: [],
       },
     ],
   },

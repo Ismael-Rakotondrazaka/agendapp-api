@@ -7,7 +7,7 @@ export interface IRefreshTokens {
   expiresAt: Date;
 }
 
-export interface ITodo {
+export interface IEvent {
   title: string;
   description: string;
   level: string;
@@ -20,7 +20,7 @@ export interface ITodo {
 
 export type TUserDocumentProps = {
   refreshTokens: Types.DocumentArray<Types.ObjectId & IRefreshTokens>;
-  todos: Types.DocumentArray<Types.ObjectId & ITodo>;
+  events: Types.DocumentArray<Types.ObjectId & IEvent>;
 };
 
 export interface IUser {
@@ -30,7 +30,7 @@ export interface IUser {
   email: string;
   password: string;
   refreshTokens: IRefreshTokens[];
-  todos: ITodo[];
+  events: IEvent[];
 }
 
 export type TUserModel = Model<
@@ -48,7 +48,7 @@ export type TUserResource = {
   fullName: string;
 };
 
-export type TTodoResource = {
+export type TEventResource = {
   _id: string;
   title: string;
   description: string;

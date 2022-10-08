@@ -14,7 +14,7 @@ const seed: TSeed[] = [
           "$2b$10$tKkDLJBEog8juJdB.onsi.zrJUnHx1QwdAUt95sKfNfKUA4jUAMYu",
         createdAt: new Date("2022-01-30T19:29:08.944Z"),
         updatedAt: new Date("2022-04-06T17:09:49.937Z"),
-        todos: [
+        events: [
           {
             _id: new ObjectId("6332aaf69a2562484d41e227"),
             title: "quo-ad-neque",
