@@ -12,5 +12,8 @@ export default function userResource(
     firstName: resource.firstName,
     lastName: resource.lastName,
     fullName: resource.fullName,
+    email: resource.email,
+    createdAt: resource.createdAt,
+    updatedAt: resource.updatedAt,
   };
 }
