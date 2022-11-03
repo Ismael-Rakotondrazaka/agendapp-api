@@ -46,6 +46,9 @@ export type TUserResource = {
   firstName: string;
   lastName: string;
   fullName: string;
+  email: string;
+  createdAt: Date | string | number;
+  updatedAt: Date | string | number;
 };
 
 export type TEventResource = {

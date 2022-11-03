@@ -36,6 +36,9 @@ describe("POST /api/v1/auth/register", () => {
                 firstName: expect.any(String),
                 lastName: expect.any(String),
                 fullName: expect.any(String),
+                email: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
               }),
               tokens: {
                 accessToken: expect.any(String),
@@ -54,6 +57,12 @@ describe("POST /api/v1/auth/register", () => {
         expect(user.firstName).toBe(firstName);
         expect(user.lastName).toBe(lastName);
         expect(user.fullName).toBe(`${firstName} ${lastName}`);
+        expect(user.email).toBe(email);
+        const createdAtTime = new Date(user.createdAt).getTime();
+        const updatedAtTime = new Date(user.updatedAt).getTime();
+
+        expect(createdAtTime).not.toBeNaN();
+        expect(updatedAtTime).not.toBeNaN();
 
         const tokens = body.data.tokens;
         expect(tokens.tokenType).toBe("bearer");
