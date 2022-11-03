@@ -197,4 +197,59 @@ describe("GET /api/v1/events/:eventId", () => {
         });
     }
   );
+
+  test.each([
+    "6359b7dedc5c0e4e172913f0",
+    "6359b7dedc5c0e4e172913f1",
+    "6359b7dedc5c0e4e172913f2",
+  ])(
+    "should be marked as failed automatically if status is 'pending' but can't be updated {testCase: 'A-n7q3EMSLsNiEWl3uKvm'}",
+    async (eventId) => {
+      await seedDB("A-n7q3EMSLsNiEWl3uKvm");
+
+      const accessTokenSecret: string =
+        process.env.TEST_ACCESS_TOKEN_SECRET || "";
+      const accessTokenLife: number = 10 * 60 * 1000; // 10mn
+      const accessToken = jwt.sign(
+        {
+          user: {
+            _id: "6359b741efd58360a17628af",
+            firstName: "Maximillian",
+            lastName: "Mayer",
+          },
+        },
+        accessTokenSecret,
+        {
+          expiresIn: `${accessTokenLife}`,
+        }
+      );
+
+      return request(app)
+        .get(`/api/v1/events/${eventId}`)
+        .set("Authorization", `Bearer ${accessToken}`)
+        .expect("Content-Type", /json/)
+        .expect(200)
+        .then((response) => {
+          expect(response.body).toEqual(
+            expect.objectContaining({
+              data: expect.objectContaining({
+                event: expect.objectContaining({
+                  _id: expect.any(String),
+                  title: expect.any(String),
+                  description: expect.any(String),
+                  status: "failed",
+                  level: expect.any(String),
+                  startAt: expect.any(String),
+                  endAt: expect.any(String),
+                  createdAt: expect.any(String),
+                  updatedAt: expect.any(String),
+                }),
+              }),
+            })
+          );
+
+          return response.body;
+        });
+    }
+  );
 });

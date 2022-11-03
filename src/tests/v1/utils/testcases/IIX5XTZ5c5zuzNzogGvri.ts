@@ -7,6 +7,7 @@ const seed: TSeed[] = [
     documents: [
       {
         _id: new ObjectId("63329c06f70df6554c998f87"),
+        email: "shanie.sipes@hotmail.com",
         firstName: "Shanie",
         lastName: "Sipes",
         password:

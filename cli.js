@@ -133,16 +133,14 @@ function createUser() {
       const lastName = faker.name.lastName();
       const passwordSaltRounds = 10;
       const createdAt = faker.date.past();
+      const password = faker.internet.password();
 
       const user = {
         _id: new ObjectId(),
         firstName: firstName,
         lastName: lastName,
         email: faker.internet.email(firstName, lastName),
-        password: bcrypt.hashSync(
-          faker.internet.password(),
-          passwordSaltRounds
-        ),
+        password: bcrypt.hashSync(password, passwordSaltRounds),
         createdAt: createdAt,
         updatedAt: faker.date.soon(Math.floor(Math.random() * 100), createdAt),
       };
@@ -153,7 +151,7 @@ function createUser() {
     "firstName": "${user.firstName}",
     "lastName": "${user.lastName}",
     "email": "${user.email}",
-    "password": "${user.password}",
+    "password": "${user.password}", // ${password}
     "createdAt": "${user.createdAt.toISOString()}",
     "updatedAt": "${user.updatedAt.toISOString()}"
   },`

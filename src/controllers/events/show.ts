@@ -5,6 +5,7 @@ import { createDataResponse } from "../../utils/responses";
 import { eventResource } from "../../resources";
 import { Types } from "mongoose";
 import { IEvent } from "../../types";
+import { isInSummaryPeriod, isToday } from "../../utils/dates";
 
 interface ICustomRequest extends Request {
   payload: {
@@ -36,6 +37,22 @@ export default async function index(
 
     if (!targetEvent) {
       throw new BadRequestError();
+    }
+
+    const now = new Date();
+
+    if (targetEvent.status === "pending") {
+      if (
+        targetEvent.startAt.getTime() < now.getTime() &&
+        !isToday(targetEvent.startAt) &&
+        !isInSummaryPeriod(targetEvent.startAt)
+      ) {
+        targetEvent.set({
+          status: "failed",
+        });
+
+        await targetUser.save();
+      }
     }
 
     return res.json(
