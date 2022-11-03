@@ -4,6 +4,14 @@ dotenv.config();
 import express, { Express } from "express";
 const app: Express = express();
 
+import cors from "cors";
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(",") : [],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(
   express.urlencoded({
