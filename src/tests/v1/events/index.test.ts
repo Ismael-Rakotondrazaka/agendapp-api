@@ -610,4 +610,55 @@ describe("GET /api/v1/events", () => {
         });
     }
   );
+
+  test("events pending in the past should be mark as failed when index them {testCase: 'aqPKmwb8OM9dapM2WYOGB'}", async () => {
+    await seedDB("aqPKmwb8OM9dapM2WYOGB");
+
+    const idStatusExpected: Record<string, string> = {
+      "635a15e4ade6d7ef67d73e15": "failed",
+      "635a15e4ade6d7ef67d73e16": "failed",
+      "635a15e4ade6d7ef67d73e17": "pending",
+    };
+
+    const accessTokenSecret: string =
+      process.env.TEST_ACCESS_TOKEN_SECRET || "";
+    const accessTokenLife: number = 10 * 60 * 1000; // 10mn
+    const accessToken = jwt.sign(
+      {
+        user: {
+          _id: "635a15bdecf04f3f49cb214d",
+          firstName: "Louie",
+          lastName: "Steuber",
+        },
+      },
+      accessTokenSecret,
+      {
+        expiresIn: `${accessTokenLife}`,
+      }
+    );
+
+    return request(app)
+      .get("/api/v1/events")
+      .set("Authorization", `Bearer ${accessToken}`)
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            data: expect.objectContaining({
+              events: expect.any(Array),
+            }),
+          })
+        );
+
+        return response.body;
+      })
+      .then((body: Record<string, unknown>) => {
+        (
+          body.data as Record<string, Array<Record<string, string>>>
+        ).events.forEach((event) => {
+          expect(event.status).toBe(idStatusExpected[event._id]);
+        });
+      });
+  });
 });
