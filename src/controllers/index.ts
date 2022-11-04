@@ -1,5 +1,6 @@
 export { default as login } from "./auth/login";
 export { default as register } from "./auth/register";
+export { default as logout } from "./auth/logout";
 export { default as storeEvents } from "./events/store";
 export { default as indexEvents } from "./events/index";
 export { default as showEvents } from "./events/show";
