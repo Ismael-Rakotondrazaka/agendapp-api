@@ -67,8 +67,7 @@ function createEvent() {
       return result;
     };
 
-    console.log("[");
-    for (let index = 0; index < length; index++) {
+    const createEvent = () => {
       let startAt = faker.date.past();
       startAt = roundDate(startAt);
       const diff =
@@ -78,10 +77,10 @@ function createEvent() {
       // if they are on different day
       if (startAt.getDate() !== endAt.getDate()) {
         endAt = startAt;
-        startAt = endAt.getDate() - diff;
+        startAt.setTime(endAt.getTime() - diff);
       }
 
-      const event = {
+      return {
         _id: new ObjectId(),
         title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
         description:
@@ -97,8 +96,21 @@ function createEvent() {
         createdAt: faker.date.past(1, startAt),
         updatedAt: faker.date.past(1, startAt),
       };
-      console.log(
-        `  {
+    };
+
+    let mode = "pretty";
+
+    if (args[2] == "true" || args[2] == "1") {
+      mode = "raw";
+    }
+
+    if (mode === "pretty") {
+      console.log("[");
+      for (let index = 0; index < length; index++) {
+        const event = createEvent();
+
+        console.log(
+          `  {
     "_id": "${event._id}",
     "title": "${event.title}",
     "description": "${event.description}",
@@ -109,9 +121,28 @@ function createEvent() {
     "createdAt": "${event.createdAt.toISOString()}",
     "updatedAt": "${event.updatedAt.toISOString()}"
   },`
-      );
+        );
+      }
+      console.log("]");
+    } else {
+      let result = "[";
+
+      for (let index = 0; index < length; index++) {
+        const event = createEvent();
+
+        result += `{"_id":{"$oid":"${event._id}"},"title":"${
+          event.title
+        }","description":"${event.description}","status":"${
+          event.status
+        }","level":"${
+          event.level
+        }","startAt":{"$date":"${event.startAt.toISOString()}"},"endAt":{"$date":"${event.endAt.toISOString()}"},"createdAt":{"$date":"${event.createdAt.toISOString()}"},"updatedAt":{"$date":"${event.updatedAt.toISOString()}"}},`;
+      }
+
+      result += "]";
+
+      console.log(result);
     }
-    console.log("]");
   } catch (error) {
     console.log(error);
   }
@@ -130,37 +161,64 @@ function createUser() {
       }
     }
 
-    console.log("[");
-    for (let index = 0; index < length; index++) {
+    const createUser = () => {
       const firstName = faker.name.firstName();
       const lastName = faker.name.lastName();
       const passwordSaltRounds = 10;
       const createdAt = faker.date.past();
-      const password = faker.internet.password();
+      const password = "password";
 
-      const user = {
+      return {
         _id: new ObjectId(),
         firstName: firstName,
         lastName: lastName,
         email: faker.internet.email(firstName, lastName),
-        password: bcrypt.hashSync(password, passwordSaltRounds),
+        encryptedPassword: bcrypt.hashSync(password, passwordSaltRounds),
+        password: password,
         createdAt: createdAt,
         updatedAt: faker.date.soon(Math.floor(Math.random() * 100), createdAt),
       };
+    };
 
-      console.log(
-        `  {
+    let mode = "pretty";
+
+    if (args[2] == "true" || args[2] == "1") {
+      mode = "raw";
+    }
+
+    if (mode === "pretty") {
+      console.log("[");
+      for (let index = 0; index < length; index++) {
+        const user = createUser();
+
+        console.log(
+          `  {
     "_id": "${user._id}",
     "firstName": "${user.firstName}",
     "lastName": "${user.lastName}",
     "email": "${user.email}",
-    "password": "${user.password}", // ${password}
+    "password": "${user.encryptedPassword}",
     "createdAt": "${user.createdAt.toISOString()}",
     "updatedAt": "${user.updatedAt.toISOString()}"
   },`
-      );
+        );
+      }
+      console.log("]");
+    } else {
+      let result = "[";
+      for (let index = 0; index < length; index++) {
+        const user = createUser();
+
+        result += `{"_id": "${user._id}","firstName":"${
+          user.firstName
+        }","lastName":"${user.lastName}","email":"${user.email}","password":"${
+          user.encryptedPassword
+        }","createdAt":"${user.createdAt.toISOString()}","updatedAt":"${user.updatedAt.toISOString()}"},`;
+      }
+      result += "]";
+
+      console.log(result);
     }
-    console.log("]");
   } catch (error) {
     console.log(error);
   }
@@ -180,9 +238,10 @@ if (args.length > 0) {
   Commands available:
       testCases:new (path) -> Create a new testCase file with random name on the given path
                               Default path is "${defaultTestCasesPath}"
-      events:new (length) -> Print a list of past events, NOT future. Be aware, Interval CAN be superposed.
+      events:new (length) (rawMode) -> Print a list of past events, NOT future. Be aware, Interval CAN be superposed.
                             Default length is 1
-      users:new (length) -> Print a list of users.
+      users:new (length) (rawMode) -> Print a list of users.
                             Default length is 1
+                            Default user.password is 'password'
   `);
 }
