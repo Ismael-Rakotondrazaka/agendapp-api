@@ -5,7 +5,7 @@
     ],
     "EVENT_LEVEL_DEFAULT": "normal",
     "EVENT_STATUS": [
-        "done",
+        "completed",
         "pending",
         "failed"
     ],

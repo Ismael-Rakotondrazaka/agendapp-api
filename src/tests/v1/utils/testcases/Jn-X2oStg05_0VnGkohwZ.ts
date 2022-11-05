@@ -21,7 +21,7 @@ const seed: TSeed[] = [
             _id: new ObjectId("633986c1e2ca9973593672a8"),
             title: "consequatur-reiciendis-quis-ipsa-ratione",
             description: "Molestiae ipsa et qui quia modi commodi.",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: faker.date.future(),
             endAt: faker.date.future(),

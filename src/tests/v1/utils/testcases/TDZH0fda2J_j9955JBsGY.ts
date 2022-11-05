@@ -21,7 +21,7 @@ const seed: TSeed[] = [
             title: "molestiae-quis-perspiciatis-repudiandae",
             description:
               "generating the interface won't do anything, we need to parse the primary COM port!",
-            status: "done",
+            status: "completed",
             level: "normal",
             startAt: new Date("2022-05-20T14:45:00.000Z"),
             endAt: new Date("2022-05-20T15:00:00.000Z"),

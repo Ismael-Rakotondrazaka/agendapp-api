@@ -20,7 +20,7 @@ const seed: TSeed[] = [
             _id: new ObjectId("63390eb0f209f919baa94e2a"),
             title: "sint-neque-vel-porro-aut",
             description: "Doloribus voluptas id quo ex unde sapiente.",
-            status: "done",
+            status: "completed",
             level: "normal",
             startAt: new Date("2022-05-29T07:15:00.000Z"),
             endAt: new Date("2022-05-29T08:15:00.000Z"),

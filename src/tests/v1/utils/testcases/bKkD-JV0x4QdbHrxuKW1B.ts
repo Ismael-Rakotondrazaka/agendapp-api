@@ -26,7 +26,7 @@ const seed: TSeed[] = [
             _id: new ObjectId("6339113572db4facefd2be95"),
             title: "perferendis-suscipit",
             description: "We need to copy the haptic XSS program!",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: startAt,
             endAt: endAt,

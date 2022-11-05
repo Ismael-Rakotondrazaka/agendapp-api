@@ -21,7 +21,7 @@ const seed: TSeed[] = [
             title: "molestias-consequuntur-excepturi",
             description:
               "Pariatur est assumenda cupiditate veritatis itaque neque.",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: new Date("2021-10-30T03:00:00.000Z"),
             endAt: new Date("2021-10-30T03:15:00.000Z"),

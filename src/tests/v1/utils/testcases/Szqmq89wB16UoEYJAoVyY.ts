@@ -20,7 +20,7 @@ const seed: TSeed[] = [
             _id: new ObjectId("63397f88074c0dc4737e6c3c"),
             title: "iste-est",
             description: "Fugiat rem ex numquam facere porro placeat.",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: faker.date.future(),
             endAt: faker.date.future(),

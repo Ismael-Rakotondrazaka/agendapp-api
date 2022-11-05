@@ -19,7 +19,7 @@ const seed: TSeed[] = [
             _id: new ObjectId("6332869880a239ec6262caec"),
             title: "libero-accusantium-iusto-qui-fugit",
             description: "Praesentium ut quia voluptates ea rerum qui.",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: "2022-01-09T22:30:00.000Z",
             endAt: new Date("2022-01-09T22:45:00.000Z"),

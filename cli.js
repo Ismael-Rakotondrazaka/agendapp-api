@@ -88,7 +88,7 @@ function createEvent() {
           Math.floor(Math.random() * 10) % 2 === 0
             ? faker.hacker.phrase()
             : faker.lorem.sentence(7),
-        status: Math.round(Math.random() * 100) % 2 === 0 ? "done" : "failed",
+        status: Math.round(Math.random() * 100) % 2 === 0 ? "completed" : "failed",
         level:
           Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
         startAt,

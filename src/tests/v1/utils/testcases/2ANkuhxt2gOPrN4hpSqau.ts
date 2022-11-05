@@ -33,7 +33,7 @@ const seed: TSeed[] = [
             _id: new ObjectId("6337e296e3611b1acb901abd"),
             title: "animi",
             description: "Qui quod recusandae quia molestiae id est.",
-            status: "done",
+            status: "completed",
             level: "normal",
             startAt: faker.date.future(),
             endAt: faker.date.future(),
