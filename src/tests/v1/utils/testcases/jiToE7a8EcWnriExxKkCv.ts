@@ -33,7 +33,7 @@ const seed: TSeed[] = [
             title: "itaque-nisi-neque",
             description:
               "I'll reboot the bluetooth GB transmitter, that should program the RAM capacitor!",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: faker.date.future(),
             endAt: faker.date.future(),

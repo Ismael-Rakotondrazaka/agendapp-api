@@ -20,7 +20,7 @@ const seed: TSeed[] = [
             title: "quo-ad-neque",
             description:
               "You can't override the port without compressing the optical GB microchip!",
-            status: "done",
+            status: "completed",
             level: "normal",
             startAt: new Date("2022-03-28T10:00:00.000Z"),
             endAt: new Date("2022-03-28T11:00:00.000Z"),

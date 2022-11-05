@@ -66,7 +66,7 @@ const seed: TSeed[] = [
             title: "et",
             description:
               "Similique quisquam repellendus deserunt beatae dolor enim.",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: new Date("2021-10-07T14:45:00.000Z"),
             endAt: new Date("2021-10-07T15:45:00.000Z"),
@@ -126,7 +126,7 @@ const seed: TSeed[] = [
             title: "dolores-nam",
             description:
               "Try to connect the RSS firewall, maybe it will copy the cross-platform pixel!",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: new Date("2022-04-15T19:15:00.000Z"),
             endAt: new Date("2022-04-15T20:15:00.000Z"),
@@ -138,7 +138,7 @@ const seed: TSeed[] = [
             title: "eligendi-ex",
             description:
               "You can't transmit the capacitor without synthesizing the redundant AI array!",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: new Date("2022-05-22T06:15:00.000Z"),
             endAt: new Date("2022-05-22T07:15:00.000Z"),
@@ -149,7 +149,7 @@ const seed: TSeed[] = [
             _id: "6332983dd0a7c6606e36a280",
             title: "veritatis-explicabo-culpa-qui",
             description: "Sunt ea beatae et maiores vel magni.",
-            status: "done",
+            status: "completed",
             level: "normal",
             startAt: new Date("2022-02-20T15:00:00.000Z"),
             endAt: new Date("2022-02-20T15:45:00.000Z"),
@@ -171,7 +171,7 @@ const seed: TSeed[] = [
             _id: "6332983dd0a7c6606e36a282",
             title: "quia-aliquid-molestiae-accusantium-ut",
             description: "Esse quo et perferendis architecto et soluta.",
-            status: "done",
+            status: "completed",
             level: "normal",
             startAt: new Date("2022-05-29T09:45:00.000Z"),
             endAt: new Date("2022-05-29T10:15:00.000Z"),
@@ -205,7 +205,7 @@ const seed: TSeed[] = [
             title: "at",
             description:
               "Use the primary SMS transmitter, then you can hack the wireless bus!",
-            status: "done",
+            status: "completed",
             level: "normal",
             startAt: new Date("2022-02-10T19:45:00.000Z"),
             endAt: new Date("2022-02-10T20:30:00.000Z"),

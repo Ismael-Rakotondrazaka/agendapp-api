@@ -21,7 +21,7 @@ const seed: TSeed[] = [
             _id: new ObjectId("633987426004f9a457bd03a4"),
             title: "dolore-ad-aliquid",
             description: "Et aut vel consequatur dolor sit ab.",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: faker.date.future(),
             endAt: faker.date.future(),

@@ -28,7 +28,7 @@ const seed: TSeed[] = [
             title: "aut-et-qui-ratione",
             description:
               "The IP port is down, calculate the primary hard drive so we can connect the PCI pixel!",
-            status: "done",
+            status: "completed",
             level: "normal",
             startAt: new Date("2022-03-05T05:30:00.000Z"),
             endAt: new Date("2022-03-05T06:00:00.000Z"),
@@ -63,7 +63,7 @@ const seed: TSeed[] = [
             title: "corporis-odit-sunt",
             description:
               "Inventore assumenda architecto deleniti vel laudantium iusto.",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: startAt1,
             endAt: endAt1,

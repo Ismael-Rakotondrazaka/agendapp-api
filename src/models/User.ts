@@ -30,7 +30,7 @@ const eventSchema = new Schema<IEvent>(
     status: {
       type: String,
       required: true,
-      enum: ["done", "pending", "failed"],
+      enum: ["completed", "pending", "failed"],
       default: "pending",
     },
     startAt: {

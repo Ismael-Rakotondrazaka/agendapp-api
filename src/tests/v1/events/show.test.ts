@@ -14,7 +14,7 @@ describe("GET /api/v1/events/:eventId", () => {
         title: "aut-et-qui-ratione",
         description:
           "The IP port is down, calculate the primary hard drive so we can connect the PCI pixel!",
-        status: "done",
+        status: "completed",
         level: "normal",
         startAt: "2022-03-05T05:30:00.000Z",
         endAt: "2022-03-05T06:00:00.000Z",
@@ -44,7 +44,7 @@ describe("GET /api/v1/events/:eventId", () => {
         title: "corporis-odit-sunt",
         description:
           "Inventore assumenda architecto deleniti vel laudantium iusto.",
-        status: "done",
+        status: "completed",
         level: "important",
         createdAt: "2021-12-26T16:37:31.402Z",
         updatedAt: "2021-12-26T16:37:31.402Z",

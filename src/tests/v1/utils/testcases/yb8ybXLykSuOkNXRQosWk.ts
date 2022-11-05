@@ -21,7 +21,7 @@ const seed: TSeed[] = [
             title: "tenetur-nihil-veniam-temporibus",
             description:
               "Ullam consequuntur autem voluptate sed rerum assumenda.",
-            status: "done",
+            status: "completed",
             level: "important",
             startAt: "2022-01-12T06:15:00.000Z",
             endAt: "2022-01-12T07:00:00.000Z",

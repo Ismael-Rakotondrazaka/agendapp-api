@@ -44,7 +44,7 @@ describe("PUT /api/v1/events/:eventId", () => {
         title: "molestias-consequuntur-excepturi",
         description:
           "Pariatur est assumenda cupiditate veritatis itaque neque.",
-        status: "done",
+        status: "completed",
         level: "important",
         startAt: "2021-10-30T03:00:00.000Z",
         endAt: "2021-10-30T03:15:00.000Z",
@@ -270,7 +270,7 @@ describe("PUT /api/v1/events/:eventId", () => {
     }
   );
 
-  test.each(["pending", "done", "failed"])(
+  test.each(["pending", "completed", "failed"])(
     "should return 400 Bad Request if trying to update status to %s even if the event is in the future {testCase: tZXDs4dLX-9DOiRDAlJx4}",
     async (statusValue) => {
       await seedDB("tZXDs4dLX-9DOiRDAlJx4");
