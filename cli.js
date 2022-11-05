@@ -88,12 +88,14 @@ function createEvent() {
           Math.floor(Math.random() * 10) % 2 === 0
             ? faker.hacker.phrase()
             : faker.lorem.sentence(7),
-        status: Math.round(Math.random() * 100) % 2 === 0 ? "completed" : "failed",
+        status:
+          Math.round(Math.random() * 100) % 2 === 0 ? "completed" : "failed",
         level:
           Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
         startAt,
         endAt,
         createdAt: faker.date.past(1, startAt),
+        updatedAt: faker.date.past(1, startAt),
       };
       console.log(
         `  {
@@ -104,7 +106,8 @@ function createEvent() {
     "level": "${event.level}",
     "startAt": "${event.startAt.toISOString()}",
     "endAt": "${event.endAt.toISOString()}",
-    "createdAt": "${event.createdAt.toISOString()}"
+    "createdAt": "${event.createdAt.toISOString()}",
+    "updatedAt": "${event.updatedAt.toISOString()}"
   },`
       );
     }
