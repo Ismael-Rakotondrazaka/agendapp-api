@@ -103,58 +103,93 @@ export default async function store(
     level = validateLevel(level);
 
     // check if no event exist in the interval
-    // there are 3 possibilities
+    // there are 4 possibilities
     const conflictEvent = await User.findOne({
       $or: [
         {
           $and: [
-            { _id: targetUser._id },
             {
-              "events.startAt": {
-                $gte: startAt,
-                $lt: endAt,
-              },
+              _id: targetUser._id,
             },
             {
-              "events.endAt": {
-                $gt: endAt,
-              },
-            },
-          ],
-        },
-        {
-          $and: [
-            { _id: targetUser._id },
-            {
-              "events.startAt": {
-                $lt: startAt,
-              },
-            },
-            {
-              "events.endAt": {
-                $gt: startAt,
-                $lte: endAt,
+              events: {
+                $elemMatch: {
+                  startAt: {
+                    $gte: startAt,
+                    $lt: endAt,
+                  },
+                  endAt: {
+                    $gt: endAt,
+                  },
+                },
               },
             },
           ],
         },
         {
           $and: [
-            { _id: targetUser._id },
             {
-              "events.startAt": {
-                $gte: startAt,
+              _id: {
+                $eq: targetUser._id,
               },
             },
             {
-              "events.endAt": {
-                $lte: endAt,
+              events: {
+                $elemMatch: {
+                  startAt: {
+                    $lt: startAt,
+                  },
+                  endAt: {
+                    $gt: startAt,
+                    $lte: endAt,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          $and: [
+            {
+              _id: {
+                $eq: targetUser._id,
+              },
+            },
+            {
+              events: {
+                $elemMatch: {
+                  startAt: {
+                    $gte: startAt,
+                  },
+                  endAt: {
+                    $lte: endAt,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          $and: [
+            {
+              _id: targetUser._id,
+            },
+            {
+              events: {
+                $elemMatch: {
+                  startAt: {
+                    $lt: startAt,
+                  },
+                  endAt: {
+                    $gt: endAt,
+                  },
+                },
               },
             },
           ],
         },
       ],
-    });
+    }).select(["_id"]);
 
     if (conflictEvent) {
       throw new ConflictError();
