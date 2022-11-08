@@ -68,7 +68,7 @@ export default async function register(
       throw new BadRequestError(
         `Fields ${FIELDS_REQUIRED.map((field) => field.name).join(
           ", "
-        )} are required`
+        )} are required.`
       );
     }
 
@@ -89,7 +89,7 @@ export default async function register(
     });
 
     if (duplicateUser) {
-      throw new ConflictError("Email already in use");
+      throw new ConflictError("Email already in use.");
     }
 
     validatePassword(password);

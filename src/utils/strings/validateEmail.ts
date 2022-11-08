@@ -4,7 +4,7 @@ import { BadRequestError } from "../errors";
 function validateEmail(email: string): string {
   email = email.trim();
   if (!validator.isEmail(email)) {
-    throw new BadRequestError("Invalid email address");
+    throw new BadRequestError("Invalid email address.");
   }
 
   return email;

@@ -78,7 +78,7 @@ export default async function store(
       throw new BadRequestError(
         `Fields ${FIELDS_REQUIRED.map((field) => field.name).join(
           ", "
-        )} are required`
+        )} are required.`
       );
     }
 
@@ -95,7 +95,7 @@ export default async function store(
     // check if start is not in the future
     if (new Date(startAt).getTime() < Date.now()) {
       throw new BadRequestError(
-        "Invalid interval. startAt is not in the future."
+        "Invalid interval. The start of the event is not in the future. (property startAt)"
       );
     }
     startAt = interval.start;

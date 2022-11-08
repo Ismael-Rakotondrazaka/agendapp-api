@@ -5,7 +5,7 @@ function validatePasswordValidation(
   password: string
 ) {
   if (passwordValidation !== password) {
-    throw new BadRequestError("Different password validation and password");
+    throw new BadRequestError("Different passwordValidation and password.");
   }
 }
 

@@ -23,7 +23,7 @@ export default async function logout(
     });
 
     if (!foundUser) {
-      throw new UnauthorizedError(""); // ? why
+      throw new UnauthorizedError();
     }
 
     const refreshTokenId = (

@@ -17,7 +17,7 @@ export default function validateInterval(
   // check if interval is less than default minimum interval
   if (diff < intervalToReferMs) {
     throw new BadRequestError(
-      `Invalid interval. ${eventConfig.EVENT_INTERVAL_MINUTES}mn is the minimum interval allowed between startAt and endAt.`
+      `Invalid interval. ${eventConfig.EVENT_INTERVAL_MINUTES}mn is the minimum interval allowed.`
     );
   }
 

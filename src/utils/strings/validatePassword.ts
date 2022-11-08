@@ -9,7 +9,7 @@ function validatePassword(password: string): boolean {
     })
   ) {
     throw new BadRequestError(
-      `${userConfig.PASSWORD_LENGTH_MIN} is the minimum allowed length for the password`
+      `${userConfig.PASSWORD_LENGTH_MIN} is the minimum allowed length for the password.`
     );
   }
 
