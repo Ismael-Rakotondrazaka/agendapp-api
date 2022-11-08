@@ -8,7 +8,7 @@ export default function validateLevel(level: string): string {
     return level;
   } else {
     throw new BadRequestError(
-      `Invalid event level. eventConfig. Only ${eventConfig.EVENT_LEVELS.map(
+      `Invalid event level. Only ${eventConfig.EVENT_LEVELS.map(
         (level) => `"${level}"`
       ).join(", ")} are allowed.`
     );

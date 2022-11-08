@@ -6,7 +6,7 @@ function validateFirstName(firstName: string): string {
   firstName = firstName.trim();
   if (!validator.isAlpha(firstName)) {
     throw new BadRequestError(
-      "firstName contains non english alphabet characters"
+      "firstName contains non english alphabet characters."
     );
   }
 
@@ -16,7 +16,7 @@ function validateFirstName(firstName: string): string {
     })
   ) {
     throw new BadRequestError(
-      `${userConfig.FIRST_NAME_LENGTH_MIN} is the minimum allowed length for firstName`
+      `${userConfig.FIRST_NAME_LENGTH_MIN} is the minimum allowed length for firstName.`
     );
   }
 
@@ -26,7 +26,7 @@ function validateFirstName(firstName: string): string {
     })
   ) {
     throw new BadRequestError(
-      `${userConfig.FIRST_NAME_LENGTH_MAX} is the maximum allowed length for firstName`
+      `${userConfig.FIRST_NAME_LENGTH_MAX} is the maximum allowed length for firstName.`
     );
   }
 

@@ -18,10 +18,6 @@ export default async function login(
   try {
     let { email, password } = req.body;
 
-    if (!email || !password) {
-      throw new BadRequestError("Fields required");
-    }
-
     const FIELDS: {
       name: string;
       type: string;
@@ -49,7 +45,7 @@ export default async function login(
       throw new BadRequestError(
         `Fields ${FIELDS_REQUIRED.map((field) => field.name).join(
           ", "
-        )} are required`
+        )} are required.`
       );
     }
 
@@ -66,7 +62,7 @@ export default async function login(
     });
 
     if (!targetUser) {
-      throw new UnauthorizedError("Credential doesn't match to our record");
+      throw new UnauthorizedError("Credential doesn't match to our record.");
     }
 
     // compare password
@@ -76,7 +72,7 @@ export default async function login(
     );
 
     if (!passwordMatch) {
-      throw new UnauthorizedError("Credential doesn't match to our record");
+      throw new UnauthorizedError("Credential doesn't match to our record.");
     }
 
     const accessTokenData = {

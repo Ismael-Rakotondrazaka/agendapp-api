@@ -14,7 +14,7 @@ export default function validateDescription(description: string): string {
     })
   ) {
     throw new BadRequestError(
-      `${eventConfig.EVENT_DESCRIPTION_MAX_LENGTH} is the maximum allowed for (events') description.`
+      `${eventConfig.EVENT_DESCRIPTION_MAX_LENGTH} is the maximum characters allowed for events' description.`
     );
   }
 
