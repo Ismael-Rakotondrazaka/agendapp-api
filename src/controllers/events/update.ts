@@ -57,7 +57,7 @@ export default async function update(
       "endAt",
     ];
 
-    if (!title || !description || !status || !level || !startAt || !endAt) {
+    if (!title || !description && description !== "" || !status || !level || !startAt || !endAt) {
       throw new BadRequestError(`Fields ${FIELDS.join(", ")} are required.`);
     }
 
@@ -188,39 +188,22 @@ export default async function update(
         {
           $and: [
             {
-              _id: {
-                $ne: targetUser._id,
-              },
+              _id: targetUser._id,
             },
             {
-              "events.startAt": {
-                $gte: startAt,
-                $lt: endAt,
-              },
-            },
-            {
-              "events.endAt": {
-                $gt: endAt,
-              },
-            },
-          ],
-        },
-        {
-          $and: [
-            {
-              _id: {
-                $ne: targetUser._id,
-              },
-            },
-            {
-              "events.startAt": {
-                $lt: startAt,
-              },
-            },
-            {
-              "events.endAt": {
-                $gt: startAt,
-                $lte: endAt,
+              events: {
+                $elemMatch: {
+                  _id: {
+                    $ne: targetEvent._id,
+                  },
+                  startAt: {
+                    $gte: startAt,
+                    $lt: endAt,
+                  },
+                  endAt: {
+                    $gt: endAt,
+                  },
+                },
               },
             },
           ],
@@ -229,23 +212,75 @@ export default async function update(
           $and: [
             {
               _id: {
-                $ne: targetUser._id,
+                $eq: targetUser._id,
               },
             },
             {
-              "events.startAt": {
-                $gte: startAt,
+              events: {
+                $elemMatch: {
+                  _id: {
+                    $ne: targetEvent._id,
+                  },
+                  startAt: {
+                    $lt: startAt,
+                  },
+                  endAt: {
+                    $gt: startAt,
+                    $lte: endAt,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          $and: [
+            {
+              _id: {
+                $eq: targetUser._id,
               },
             },
             {
-              "events.endAt": {
-                $lte: endAt,
+              events: {
+                $elemMatch: {
+                  _id: {
+                    $ne: targetEvent._id,
+                  },
+                  startAt: {
+                    $gte: startAt,
+                  },
+                  endAt: {
+                    $lte: endAt,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          $and: [
+            {
+              _id: targetUser._id,
+            },
+            {
+              events: {
+                $elemMatch: {
+                  _id: {
+                    $ne: targetEvent._id,
+                  },
+                  startAt: {
+                    $lt: startAt,
+                  },
+                  endAt: {
+                    $gt: endAt,
+                  },
+                },
               },
             },
           ],
         },
       ],
-    });
+    }).select(["_id"]);
 
     if (conflictEvent) {
       throw new ConflictError(
