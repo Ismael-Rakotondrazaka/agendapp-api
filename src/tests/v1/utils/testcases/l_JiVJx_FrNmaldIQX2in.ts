@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { ObjectId } from "mongodb";
 import { TSeed } from "../../types";
+import { nanoid } from "nanoid";
 
 const startAt1 = faker.date.future();
 const endAt1 = faker.date.soon(1, startAt1);
@@ -19,6 +20,7 @@ const seed: TSeed[] = [
         email: "Rusty.Upton@yahoo.com",
         password:
           "$2b$10$DaTjZFdkRl7POzDkLKrOeO/y.HEAgiGHhCjuv8eRnxQOzwtdSoYI6",
+        channelId: nanoid(),
         createdAt: new Date("2021-11-01T17:30:37.736Z"),
         updatedAt: new Date("2021-12-06T12:17:25.204Z"),
         refreshTokens: [],

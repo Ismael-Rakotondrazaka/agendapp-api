@@ -17,6 +17,7 @@ import {
   validatePasswordValidation,
 } from "../../utils/strings";
 import { userResource } from "../../resources";
+import { nanoid } from "nanoid";
 
 export default async function register(
   req: Request,
@@ -104,6 +105,7 @@ export default async function register(
       firstName,
       lastName,
       email,
+      channelId: nanoid(),
       password: hashedPassword,
     });
 

@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { TSeed } from "../../types";
+import { nanoid } from "nanoid";
 
 const seed: TSeed[] = [
   {
@@ -12,6 +13,7 @@ const seed: TSeed[] = [
         email: "Romaine.Keeling12@hotmail.com",
         password:
           "$2b$10$qLFhgtJdDFY8YjoaHGKGYuROhJJ6sXVdZ/DSm88YRMRPkwqCsK14.", // shHs3_MbQYHQwVS
+        channelId: nanoid(),
         createdAt: new Date("2022-06-08T08:02:32.897Z"),
         updatedAt: new Date("2022-06-12T15:34:38.515Z"),
         refreshTokens: [],

@@ -1,7 +1,8 @@
 import { StatusCodes, getReasonPhrase } from "http-status-codes";
 import errorConfig from "../../configs/errorConfig.json";
+import { IGeneralError } from "../../types";
 
-export class GeneralError extends Error {
+export class GeneralError extends Error implements IGeneralError {
   protected readonly secret: boolean;
   protected readonly privateMessage: string;
   protected readonly statusText: string;

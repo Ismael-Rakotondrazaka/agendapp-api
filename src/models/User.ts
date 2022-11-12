@@ -65,6 +65,10 @@ const userSchema = new Schema<IUser, TUserModel>(
       type: String,
       required: true,
     },
+    channelId: {
+      type: String,
+      required: true,
+    },
     refreshTokens: [refreshTokenSchema],
     events: [eventSchema],
   },

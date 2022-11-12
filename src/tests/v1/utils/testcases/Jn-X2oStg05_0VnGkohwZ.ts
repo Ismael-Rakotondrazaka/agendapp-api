@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { ObjectId } from "mongodb";
 import { TSeed } from "../../types";
+import { nanoid } from "nanoid";
 
 const seed: TSeed[] = [
   {
@@ -13,6 +14,7 @@ const seed: TSeed[] = [
         email: "Itzel_Farrell58@hotmail.com",
         password:
           "$2b$10$gHbFgblthb7eR0A2l80w0OAcV.kivZnxZ1pifpe79Jxwo.18f7Y.C",
+        channelId: nanoid(),
         createdAt: new Date("2022-05-29T21:26:52.725Z"),
         updatedAt: new Date("2022-08-25T08:11:13.326Z"),
         refreshTokens: [],

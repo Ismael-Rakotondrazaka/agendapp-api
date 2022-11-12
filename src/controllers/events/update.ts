@@ -13,6 +13,7 @@ import { validateInterval } from "../../utils/dates";
 import { IEvent } from "../../types";
 import { Types } from "mongoose";
 import eventConfig from "../../configs/eventConfig.json";
+import { socketServer } from "../../services/socketIO";
 
 interface ICustomRequest extends Request {
   payload: {
@@ -57,7 +58,14 @@ export default async function update(
       "endAt",
     ];
 
-    if (!title || !description && description !== "" || !status || !level || !startAt || !endAt) {
+    if (
+      !title ||
+      (!description && description !== "") ||
+      !status ||
+      !level ||
+      !startAt ||
+      !endAt
+    ) {
       throw new BadRequestError(`Fields ${FIELDS.join(", ")} are required.`);
     }
 
@@ -158,8 +166,8 @@ export default async function update(
     // check if an update to fieldNoChange is made
     for (const field of fieldNoChange) {
       if (
-        eventUpdate[field] !==
-        (targetEvent as unknown as Record<string, string>)[field]
+        eventUpdate[field].toString() !==
+        (targetEvent as unknown as Record<string, string>)[field].toString()
       ) {
         throw new BadRequestError(
           `Update to field ${field} is not allowed since the target event is in the ${updateType}.`
@@ -292,9 +300,15 @@ export default async function update(
 
     await targetUser.save();
 
+    const targetEventResource = eventResource(targetEvent);
+
+    socketServer
+      .to(targetUser.channelId)
+      .emit("events:update", targetEventResource);
+
     return res.status(201).json(
       createDataResponse({
-        event: eventResource(targetEvent),
+        event: targetEventResource,
       })
     );
   } catch (error) {
