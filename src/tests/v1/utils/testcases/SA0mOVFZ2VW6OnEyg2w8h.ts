@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { TSeed } from "../../types";
+import { nanoid } from "nanoid";
 import { ObjectId } from "mongodb";
 import bcrypt from "bcrypt";
 
@@ -19,6 +20,7 @@ const seed: TSeed[] = [
         lastName,
         email: faker.internet.email(),
         password: bcrypt.hashSync(faker.internet.password(), passwordSaltRound),
+        channelId: nanoid(),
         createdAt: faker.date.recent(),
         updatedAt: faker.date.recent(),
         refreshTokens: [],

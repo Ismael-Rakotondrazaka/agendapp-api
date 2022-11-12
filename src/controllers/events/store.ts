@@ -9,6 +9,7 @@ import {
   validateDescription,
   validateLevel,
 } from "../../utils/strings";
+import { socketServer } from "../../services/socketIO";
 
 interface ICustomRequest extends Request {
   payload: {
@@ -206,9 +207,15 @@ export default async function store(
     targetUser.events.push(targetEvent);
     await targetUser.save();
 
+    const targetEventResource = eventResource(targetEvent);
+
+    socketServer
+      .to(targetUser.channelId)
+      .emit("events:store", targetEventResource);
+
     return res.status(201).json(
       createDataResponse({
-        event: eventResource(targetEvent),
+        event: targetEventResource,
       })
     );
   } catch (error) {

@@ -4,6 +4,7 @@ import { BadRequestError } from "../../utils/errors";
 import { Types } from "mongoose";
 import { IEvent } from "../../types";
 import { ForbiddenError } from "../../utils/errors/index";
+import { socketServer } from "../../services/socketIO";
 
 interface ICustomRequest extends Request {
   payload: {
@@ -46,6 +47,8 @@ export default async function store(
 
     targetUser.events.id(eventId)?.remove();
     await targetUser.save();
+
+    socketServer.to(targetUser.channelId).emit("events:destroy", eventId);
 
     return res.sendStatus(204);
   } catch (error) {

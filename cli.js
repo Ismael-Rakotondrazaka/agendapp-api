@@ -21,6 +21,7 @@ async function createTestCase() {
       `
 import { faker } from "@faker-js/faker";
 import { TSeed } from "../../types";
+import { nanoid } from "nanoid";
 
 const seed: TSeed[] = [
   {

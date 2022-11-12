@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { TSeed } from "../../types";
+import { nanoid } from "nanoid";
 
 const startAt = new Date(Date.now() + 48 * 60 * 60 * 1000); // after tomorrow
 startAt.setHours(8, 0, 0, 0);
@@ -16,6 +17,7 @@ const seed: TSeed[] = [
         email: "Torey_Lowe@yahoo.com",
         password:
           "$2b$10$d3ItuFZROFWogK2Jntde9uoxdVQbrf1F24D/MFvj5a/juBZSBPe6C",
+        channelId: nanoid(),
         createdAt: new Date("2022-04-01T22:40:43.584Z"),
         updatedAt: new Date("2022-04-08T04:57:21.074Z"),
         refreshTokens: [],

@@ -28,6 +28,7 @@ export interface IUser {
   lastName: string;
   fullName: string;
   email: string;
+  channelId: string;
   password: string;
   refreshTokens: IRefreshTokens[];
   events: IEvent[];
@@ -78,3 +79,23 @@ export type TErrorResponse = {
     dateTime: string | Date;
   };
 };
+
+export interface IGeneralError {
+  isSecret: () => boolean;
+  getStatusCode: () => number;
+  getStatusText: () => string;
+  getCode: () => string;
+  getMessage: () => string;
+  getPrivateMessage: () => string;
+  getDateTime: () => Date;
+}
+
+export interface IServerToClientEvents {
+  "events:store": (event: TEventResource) => void;
+  "events:update": (event: TEventResource) => void;
+  "events:destroy": (id: string) => void;
+}
+
+export interface IClientToServerEvents {
+  hello: () => void;
+}
