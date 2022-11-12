@@ -131,7 +131,7 @@ describe("DELETE /api/v1/events/:eventId", () => {
     );
   });
 
-  test("should return 204 No Content for deleting a events is passing now {testCase: bKkD-JV0x4QdbHrxuKW1B}", async () => {
+  test("should return 403 Forbidden for deleting a events is passing now {testCase: bKkD-JV0x4QdbHrxuKW1B}", async () => {
     await seedDB("bKkD-JV0x4QdbHrxuKW1B");
 
     const eventId = "6339113572db4facefd2be95";
@@ -157,7 +157,7 @@ describe("DELETE /api/v1/events/:eventId", () => {
     await request(app)
       .delete(`/api/v1/events/${eventId}`)
       .set("Authorization", `Bearer ${accessToken}`)
-      .expect(204); // No Content
+      .expect(403); // Forbidden
   });
 
   test.each([
