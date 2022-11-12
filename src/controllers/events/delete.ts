@@ -38,11 +38,9 @@ export default async function store(
       throw new BadRequestError();
     }
 
-    const now = new Date();
-
     // check if event is in the past
-    if (targetEvent.endAt.getTime() <= now.getTime()) {
-      throw new ForbiddenError("Can't update past events.");
+    if (targetEvent.startAt.getTime() < Date.now()) {
+      throw new ForbiddenError("Can't delete past events or actual events.");
     }
 
     targetUser.events.id(eventId)?.remove();
