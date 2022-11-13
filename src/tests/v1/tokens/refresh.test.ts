@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-dotenv.config();
+import path from "path";
+dotenv.config({ path: path.join(__dirname, "../../../../.env") });
 import request from "supertest";
 import seedDB from "../utils/seeds/seedDB";
 import app from "../../../app";
