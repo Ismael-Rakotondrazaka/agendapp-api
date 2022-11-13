@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-dotenv.config();
+import path from "path";
+dotenv.config({ path: path.join(__dirname, "../../../.env") });
 import { Response, Request, NextFunction } from "express";
 import { ForbiddenError } from "../utils/errors";
 import jwt, { JsonWebTokenError, JwtPayload } from "jsonwebtoken";

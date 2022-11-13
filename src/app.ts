@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-dotenv.config();
+import path from "path";
+dotenv.config({ path: path.join(__dirname, "../.env") });
 
 import express, { Express } from "express";
 const app: Express = express();
@@ -37,7 +38,7 @@ import { errorMiddleware } from "./middlewares/index";
 app.use(errorMiddleware);
 
 import mongoose from "./services/mongoose/index";
-const databaseUri: string = process.env.TEST_DATABASE_URI || "";
+const databaseUri: string = process.env.DATABASE_URI || "";
 mongoose.connect(databaseUri);
 
 export default app;
