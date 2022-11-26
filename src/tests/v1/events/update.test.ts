@@ -41,7 +41,9 @@ describe("PUT /api/v1/events/:eventId", () => {
 
       const originalEventId = "63358cdf924b293800bcc8df";
 
-      const data: Record<string, string> = {
+      const timezoneOffset = new Date().getTimezoneOffset();
+
+      const data: Record<string, string | number> = {
         title: "molestias-consequuntur-excepturi",
         description:
           "Pariatur est assumenda cupiditate veritatis itaque neque.",
@@ -49,6 +51,7 @@ describe("PUT /api/v1/events/:eventId", () => {
         level: "important",
         startAt: "2021-10-30T03:00:00.000Z",
         endAt: "2021-10-30T03:15:00.000Z",
+        timezoneOffset,
       };
 
       data[change.field] = change.value;
@@ -128,7 +131,9 @@ describe("PUT /api/v1/events/:eventId", () => {
       const originalCreatedAt = "2021-03-24T15:25:27.214Z";
       const originalUpdatedAt = "2021-03-24T15:25:27.214Z";
 
-      const data: Record<string, string> = {
+      const timezoneOffset = new Date().getTimezoneOffset();
+
+      const data: Record<string, string | number> = {
         title: "molestias-consequuntur-excepturi",
         description:
           "Pariatur est assumenda cupiditate veritatis itaque neque.",
@@ -136,6 +141,7 @@ describe("PUT /api/v1/events/:eventId", () => {
         level: "important",
         startAt: originalStartAt.toISOString(),
         endAt: originalEndAt.toISOString(),
+        timezoneOffset,
       };
 
       if (typeof change.value === "number") {
@@ -204,7 +210,14 @@ describe("PUT /api/v1/events/:eventId", () => {
     }
   );
 
-  test.each(["title", "description", "level", "startAt", "endAt"])(
+  test.each([
+    "title",
+    "description",
+    "level",
+    "startAt",
+    "endAt",
+    "timezoneOffset",
+  ])(
     "should return 400 Bad Request if field %s is missing even if event is in the future and a change is made {testCase: w2DgY6X4H1f-NRYxt_U_A}",
     async (field: string) => {
       await seedDB("w2DgY6X4H1f-NRYxt_U_A");
@@ -216,7 +229,9 @@ describe("PUT /api/v1/events/:eventId", () => {
       const originalEndAt = new Date(Date.now() + 48 * 60 * 60 * 1000); // after tomorrow
       originalEndAt.setHours(5, 0, 0, 0);
 
-      const data: Record<string, string> = {
+      const timezoneOffset = new Date().getTimezoneOffset();
+
+      const data: Record<string, string | number> = {
         title: "odit",
         description:
           "I'll synthesize the online JSON system, that should alarm the UDP interface!",
@@ -228,6 +243,7 @@ describe("PUT /api/v1/events/:eventId", () => {
         endAt: new Date(
           originalEndAt.getTime() + 1 * 60 * 60 * 1000
         ).toISOString(),
+        timezoneOffset,
       };
 
       delete data[field];
@@ -283,13 +299,16 @@ describe("PUT /api/v1/events/:eventId", () => {
       const originalEndAt = new Date(Date.now() + 48 * 60 * 60 * 1000); // after tomorrow
       originalEndAt.setHours(5, 0, 0, 0);
 
-      const data: Record<string, string> = {
+      const timezoneOffset = new Date().getTimezoneOffset();
+
+      const data: Record<string, string | number> = {
         title: "repellat",
         description: "Et quos fuga illum iusto officiis quibusdam.",
         status: statusValue,
         level: "important",
         startAt: originalStartAt.toISOString(),
         endAt: originalEndAt.toISOString(),
+        timezoneOffset,
       };
 
       // mimic accessToken
@@ -376,6 +395,8 @@ describe("PUT /api/v1/events/:eventId", () => {
         }
       );
 
+      const timezoneOffset = new Date().getTimezoneOffset();
+
       await request(app)
         .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
@@ -389,6 +410,7 @@ describe("PUT /api/v1/events/:eventId", () => {
             Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
           startAt,
           endAt,
+          timezoneOffset,
         })
         .expect("Content-Type", /json/)
         .expect(201);
@@ -403,6 +425,7 @@ describe("PUT /api/v1/events/:eventId", () => {
           Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
         startAt: new Date(startAt.getTime() + interval.startAt),
         endAt: new Date(endAt.getTime() + interval.endAt),
+        timezoneOffset,
       };
 
       await request(app)

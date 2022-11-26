@@ -36,6 +36,7 @@ export default async function store(
     }
 
     let { title, description, startAt, endAt, level } = req.body;
+    const { timezoneOffset } = req.body;
 
     const FIELDS: {
       name: string;
@@ -63,6 +64,11 @@ export default async function store(
         required: true,
       },
       {
+        name: "timezoneOffset",
+        type: "number",
+        required: true,
+      },
+      {
         name: "level",
         type: "string",
         required: false,
@@ -75,12 +81,10 @@ export default async function store(
       required: boolean;
     }[] = FIELDS.filter((field) => field.required);
 
-    if (!title || !startAt || !endAt) {
-      throw new BadRequestError(
-        `Fields ${FIELDS_REQUIRED.map((field) => field.name).join(
-          ", "
-        )} are required.`
-      );
+    for (const field of FIELDS_REQUIRED) {
+      if (!req.body[field.name]) {
+        throw new BadRequestError(`Field ${field.name} is required.`);
+      }
     }
 
     // force to be string
@@ -92,13 +96,8 @@ export default async function store(
 
     title = validateTitle(title);
     description = validateDescription(description);
-    const interval = validateInterval(startAt, endAt);
-    // check if start is not in the future
-    if (new Date(startAt).getTime() < Date.now()) {
-      throw new BadRequestError(
-        "Invalid interval. The start of the event is not in the future. (property startAt)"
-      );
-    }
+    const interval = validateInterval(startAt, endAt, timezoneOffset);
+
     startAt = interval.start;
     endAt = interval.end;
     level = validateLevel(level);
