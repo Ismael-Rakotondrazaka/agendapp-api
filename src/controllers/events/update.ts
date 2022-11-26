@@ -48,6 +48,7 @@ export default async function update(
     }
 
     let { title, description, level, status, startAt, endAt } = req.body;
+    const { timezoneOffset } = req.body;
 
     const FIELDS: string[] = [
       "title",
@@ -78,7 +79,7 @@ export default async function update(
 
     title = validateTitle(title);
     description = validateDescription(description);
-    const interval = validateInterval(startAt, endAt);
+    const interval = validateInterval(startAt, endAt, timezoneOffset);
     startAt = interval.start;
     endAt = interval.end;
     level = validateLevel(level);

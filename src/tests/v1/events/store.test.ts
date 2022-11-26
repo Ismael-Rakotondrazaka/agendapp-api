@@ -35,6 +35,7 @@ describe("POST /api/v1/events", () => {
     const description =
       "The SMTP monitor is down, generate the auxiliary pixel so we can program the CLI system!";
 
+    const timezoneOffset: number = new Date().getTimezoneOffset();
     const startAt: Date = faker.date.future();
     startAt.setHours(8); // To make sure start is not a few minutes before midnight
     const endAt = new Date(startAt.getTime() + 15 * 60 * 1000); // startAt + 15mn
@@ -43,6 +44,7 @@ describe("POST /api/v1/events", () => {
       description,
       startAt,
       endAt,
+      timezoneOffset,
       level: "normal",
     };
 
@@ -126,6 +128,7 @@ describe("POST /api/v1/events", () => {
     const description =
       "The SMTP monitor is down, generate the auxiliary pixel so we can program the CLI system!";
 
+    const timezoneOffset = new Date().getTimezoneOffset();
     const startAt: Date = faker.date.future();
     startAt.setHours(8); // To make sure start is not a few minutes before midnight
     const endAt = new Date(startAt.getTime() + 15 * 60 * 1000); // startAt + 15mn
@@ -134,6 +137,7 @@ describe("POST /api/v1/events", () => {
       description,
       startAt,
       endAt,
+      timezoneOffset,
       level: "important",
     };
 
@@ -213,6 +217,7 @@ describe("POST /api/v1/events", () => {
     });
 
     // creating the data to send
+    const timezoneOffset = new Date().getTimezoneOffset();
     const title = "quia-eligendi-autem";
     const description =
       "If we calculate the port, we can get to the SQL pixel through the online ASCII sensor!";
@@ -226,6 +231,7 @@ describe("POST /api/v1/events", () => {
       description,
       startAt,
       endAt,
+      timezoneOffset,
     };
 
     return request(app)
@@ -305,6 +311,7 @@ describe("POST /api/v1/events", () => {
     const description =
       "The SMTP monitor is down, generate the auxiliary pixel so we can program the CLI system!";
 
+    const timezoneOffset = new Date().getTimezoneOffset();
     const startAt: Date = faker.date.future();
     startAt.setHours(4); // To make sure start is not a few minutes before midnight
     const endAt = new Date(startAt.getTime() + 26 * 60 * 60 * 1000); // startAt + 26h
@@ -313,6 +320,7 @@ describe("POST /api/v1/events", () => {
       description,
       startAt,
       endAt,
+      timezoneOffset,
     };
 
     return request(app)
@@ -365,6 +373,7 @@ describe("POST /api/v1/events", () => {
     const description =
       "The SMTP monitor is down, generate the auxiliary pixel so we can program the CLI system!";
 
+    const timezoneOffset = new Date().getTimezoneOffset();
     const startAt: Date = faker.date.future();
     startAt.setHours(14); // To make sure start is not a few minutes before midnight
     const endAt = new Date(startAt.getTime() - 6 * 60 * 60 * 1000); // startAt - 6h
@@ -373,6 +382,7 @@ describe("POST /api/v1/events", () => {
       description,
       startAt,
       endAt,
+      timezoneOffset,
     };
 
     return request(app)
@@ -432,6 +442,11 @@ describe("POST /api/v1/events", () => {
       required: true,
     },
     {
+      name: "timezoneOffset",
+      type: "number",
+      required: true,
+    },
+    {
       name: "level",
       type: "string",
       required: false,
@@ -473,6 +488,7 @@ describe("POST /api/v1/events", () => {
       const description =
         "The SMTP monitor is down, generate the auxiliary pixel so we can program the CLI system!";
 
+      const timezoneOffset = new Date().getTimezoneOffset();
       const startAt: Date = faker.date.future();
       startAt.setHours(10); // To make sure start is not a few minutes before midnight
       const endAt = new Date(startAt.getTime() + 4 * 60 * 60 * 1000); // startAt + 4h
@@ -481,6 +497,7 @@ describe("POST /api/v1/events", () => {
         description,
         startAt,
         endAt,
+        timezoneOffset,
       };
 
       delete data[field.name];
@@ -551,7 +568,7 @@ describe("POST /api/v1/events", () => {
       const title = "quisquam-debitis-temporibus";
       const description =
         "The SMTP monitor is down, generate the auxiliary pixel so we can program the CLI system!";
-
+      const timezoneOffset = new Date().getTimezoneOffset();
       const startAt: Date = faker.date.future();
       startAt.setHours(10); // To make sure start is not a few minutes before midnight
       const endAt = new Date(startAt.getTime() + 4 * 60 * 60 * 1000); // startAt + 4h
@@ -560,6 +577,7 @@ describe("POST /api/v1/events", () => {
         description,
         startAt,
         endAt,
+        timezoneOffset,
       };
 
       delete data[field.name];
@@ -644,7 +662,7 @@ describe("POST /api/v1/events", () => {
     const title = "quisquam-debitis-temporibus";
     const description =
       "The SMTP monitor is down, generate the auxiliary pixel so we can program the CLI system!";
-
+    const timezoneOffset = new Date().getTimezoneOffset();
     const startAt: Date = faker.date.future();
     startAt.setHours(15); // To make sure start is not a few minutes before midnight
     const endAt = new Date(startAt.getTime() - 6 * 60 * 60 * 1000); // startAt - 6h
@@ -653,6 +671,7 @@ describe("POST /api/v1/events", () => {
       description,
       startAt,
       endAt,
+      timezoneOffset,
     };
 
     return request(app)
@@ -712,7 +731,7 @@ describe("POST /api/v1/events", () => {
     const title = "quisquam-debitis-temporibus";
     const description =
       "The SMTP monitor is down, generate the auxiliary pixel so we can program the CLI system!";
-
+    const timezoneOffset = new Date().getTimezoneOffset();
     const startAt: Date = faker.date.future();
     startAt.setHours(20); // To make sure start is not a few minutes before midnight
     const endAt = new Date(startAt.getTime() + 35 * 60 * 1000); // startAt + 35mn
@@ -721,6 +740,7 @@ describe("POST /api/v1/events", () => {
       description,
       startAt,
       endAt,
+      timezoneOffset,
     };
 
     return request(app)
@@ -781,7 +801,7 @@ describe("POST /api/v1/events", () => {
     const title = "quisquam-debitis-temporibus";
     const description =
       "The SMTP monitor is down, generate the auxiliary pixel so we can program the CLI system!";
-
+    const timezoneOffset = new Date().getTimezoneOffset();
     const startAt: Date = faker.date.future();
     startAt.setHours(20); // To make sure start is not a few minutes before midnight
     const endAt = new Date(startAt.getTime() + 35 * 60 * 1000); // startAt + 35mn
@@ -790,6 +810,7 @@ describe("POST /api/v1/events", () => {
       description,
       startAt,
       endAt,
+      timezoneOffset,
     };
 
     return request(app)
@@ -875,6 +896,8 @@ describe("POST /api/v1/events", () => {
         }
       );
 
+      const timezoneOffset = new Date().getTimezoneOffset();
+
       await request(app)
         .post("/api/v1/events")
         .set("Authorization", `Bearer ${accessToken}`)
@@ -888,6 +911,7 @@ describe("POST /api/v1/events", () => {
             Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
           startAt,
           endAt,
+          timezoneOffset,
         })
         .expect("Content-Type", /json/)
         .expect(201);
@@ -902,6 +926,7 @@ describe("POST /api/v1/events", () => {
           Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
         startAt: new Date(startAt.getTime() + interval.startAt),
         endAt: new Date(endAt.getTime() + interval.endAt),
+        timezoneOffset,
       };
 
       await request(app)
@@ -945,6 +970,7 @@ describe("POST /api/v1/events", () => {
       const startAt = faker.date.future();
       startAt.setHours(12, 0, 0, 0);
       const endAt = new Date(startAt.getTime() + 2 * 60 * 60 * 1000);
+      const timezoneOffset = new Date().getTimezoneOffset();
 
       // mimic accessToken
       const accessTokenSecret: string =
@@ -977,6 +1003,7 @@ describe("POST /api/v1/events", () => {
             Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
           startAt,
           endAt,
+          timezoneOffset,
         })
         .expect("Content-Type", /json/)
         .expect(201);
@@ -1004,6 +1031,7 @@ describe("POST /api/v1/events", () => {
             Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
           startAt: newStartAt,
           endAt: newEndAt,
+          timezoneOffset,
         })
         .expect("Content-Type", /json/)
         .expect(201);
@@ -1015,17 +1043,6 @@ describe("POST /api/v1/events", () => {
     "should return 201 Created if startAt or endAt is at midnight {testCase: y-GEOrbC8lISzyHB22JPV}",
     async (interval) => {
       await seedDB("y-GEOrbC8lISzyHB22JPV");
-
-      const data: Record<string, string> = {
-        title: faker.lorem.slug(Math.floor(Math.random() * 5 + 1)),
-        description:
-          Math.floor(Math.random() * 10) % 2 === 0
-            ? faker.hacker.phrase()
-            : faker.lorem.sentence(7),
-        status: Math.round(Math.random() * 100) % 2 === 0 ? "completed" : "failed",
-        level:
-          Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
-      };
 
       // mimic accessToken
       const accessTokenSecret: string =
@@ -1051,8 +1068,7 @@ describe("POST /api/v1/events", () => {
 
       const startAt = new Date(endAt.getTime() - interval * 60 * 1000); // start - interval
 
-      data["startAt"] = startAt.toISOString();
-      data["endAt"] = endAt.toISOString();
+      const timezoneOffset = new Date().getTimezoneOffset();
 
       await request(app)
         .post("/api/v1/events")
@@ -1067,6 +1083,7 @@ describe("POST /api/v1/events", () => {
             Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
           startAt,
           endAt,
+          timezoneOffset,
         })
         .expect("Content-Type", /json/)
         .expect(201);
@@ -1090,6 +1107,7 @@ describe("POST /api/v1/events", () => {
             Math.round(Math.random() * 100) % 2 === 0 ? "normal" : "important",
           startAt,
           endAt,
+          timezoneOffset,
         })
         .expect("Content-Type", /json/)
         .expect(201);
