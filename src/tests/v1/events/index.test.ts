@@ -514,6 +514,8 @@ describe("GET /api/v1/events", () => {
         }
       );
 
+      const timezoneOffset = new Date().getTimezoneOffset();
+
       let lastEvent = new Date();
       await Promise.all(
         test.input.events.values.map(async (eventInput) => {
@@ -536,6 +538,7 @@ describe("GET /api/v1/events", () => {
             ...eventInput,
             startAt,
             endAt,
+            timezoneOffset,
           };
 
           await request(app)
